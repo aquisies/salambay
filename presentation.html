@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=960, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="description" content="Propuesta Digital Salambay Developers - Transformación Digital">
   <title>Propuesta Digital Salambay Developers</title>
   
@@ -1100,6 +1100,22 @@
 </head>
 
 <body class="theme-dark">
+  
+  <!-- ============================================
+       PUERTA DE SEGURIDAD (ACCESS GATE)
+       ============================================ -->
+  <div id="accessGate" class="access-gate">
+    <div class="login-container">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">🔒</div>
+      <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem; color: white;">Acceso Restringido</h2>
+      <p style="color: var(--color-text-muted); font-size: 0.9rem;">Esta propuesta es confidencial para Salambay Developers.</p>
+      
+      <input type="password" id="accessCode" class="login-input" placeholder="INGRESA EL CÓDIGO" autocomplete="off">
+      <button onclick="validateAccess()" class="login-btn">DESBLOQUEAR</button>
+      <p id="loginMsg" style="color: #f87171; font-size: 0.8rem; height: 1.2rem; margin-top: 1rem;"></p>
+    </div>
+  </div>
+
   <div class="presentation-container">
     <div class="keyboard-hint">
       ← → Navegar | Espacio: Siguiente
@@ -2612,9 +2628,98 @@
       updateGalleryNavButtons();
     }
 
+    // ============================================
+    // ACCESS CONTROL LOGIC
+    // ============================================
+    const ACCESS_KEY = 'salambay_access_granted';
+    const VALID_CODES = ['SALAMBAY2025', 'DIGITAL25', 'ADMIN'];
+
+    function checkAccess() {
+      const isGranted = localStorage.getItem(ACCESS_KEY);
+      const gate = document.getElementById('accessGate');
+      
+      if (isGranted === 'true') {
+        gate.classList.add('hidden');
+      } else {
+        gate.classList.remove('hidden');
+      }
+    }
+
+    function validateAccess() {
+      const input = document.getElementById('accessCode');
+      const btn = document.querySelector('.login-btn');
+      const msg = document.getElementById('loginMsg');
+      const code = input.value.trim().toUpperCase();
+
+      if (VALID_CODES.includes(code)) {
+        // Success
+        localStorage.setItem(ACCESS_KEY, 'true');
+        btn.innerHTML = '¡ACCESO CONCEDIDO!';
+        btn.style.background = '#4ade80';
+        setTimeout(() => {
+          document.getElementById('accessGate').classList.add('hidden');
+        }, 800);
+      } else {
+        // Error
+        msg.textContent = 'CÓDIGO INCORRECTO';
+        input.classList.add('login-shake');
+        input.value = '';
+        setTimeout(() => {
+          input.classList.remove('login-shake');
+          msg.textContent = '';
+        }, 1000);
+      }
+    }
+
+    // Enter key support for login
+    document.getElementById('accessCode').addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') {
+        validateAccess();
+      }
+    });
+
+
+    // ============================================
+    // MOBILE SWIPE LOGIC
+    // ============================================
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', e => {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+      const SWIPE_THRESHOLD = 50;
+      const swipeDistance = touchEndX - touchStartX;
+      
+      // Swipe Left (Next)
+      if (swipeDistance < -SWIPE_THRESHOLD) {
+        if (!document.querySelector('.product-modal.active') && !document.querySelector('.image-modal.active')) {
+          nextSlide();
+        }
+      }
+      
+      // Swipe Right (Prev)
+      if (swipeDistance > SWIPE_THRESHOLD) {
+        if (!document.querySelector('.product-modal.active') && !document.querySelector('.image-modal.active')) {
+          previousSlide();
+        }
+      }
+    }
+
     // Inicialización cuando el DOM está listo
     document.addEventListener('DOMContentLoaded', function() {
       console.log('Presentación Salambay Developers cargada correctamente');
+      
+      // Verificar acceso
+      checkAccess();
+
       // Inicializar las tarjetas flip
       initFlipCards();
       // Inicializar el modal de imágenes
