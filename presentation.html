@@ -1,0 +1,2678 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=960, initial-scale=1.0">
+  <meta name="description" content="Propuesta Digital Salambay Developers - Transformación Digital">
+  <title>Propuesta Digital Salambay Developers</title>
+  
+  <style>
+    /* ============================================
+       VARIABLES CSS - Design System
+       ============================================ */
+    :root {
+      /* Typography */
+      --font-family-display: Arial, sans-serif;
+      --font-family-content: Arial, sans-serif;
+      --font-weight-display: 600;
+      --font-weight-content: 400;
+      --font-size-content: 16px;
+      --line-height-content: 1.4;
+      
+      /* Colors - Dark Theme */
+      --color-bg-base: #0f172a;
+      --color-bg-elevated: #020617;
+      --color-bg-surface: #1e293b;
+      --color-bg-muted: #334155;
+      --color-text-primary: #f1f5f9;
+      --color-text-secondary: #cbd5e1;
+      --color-text-muted: #94a3b8;
+      --color-text-accent: #38bdf8;
+      --color-primary: #38bdf8;
+      --color-primary-foreground: #0f172a;
+      --color-warning: #fbbf24;
+      
+      /* Spacing */
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 1rem;
+      --spacing-md: 1.5rem;
+      --spacing-lg: 2rem;
+      --spacing-xl: 3rem;
+      --spacing-2xl: 4rem;
+      
+      /* Transitions */
+      --transition-fast: 0.3s;
+      --transition-normal: 0.6s;
+    }
+
+    /* ============================================
+       RESET & BASE STYLES
+       ============================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-family-content);
+      font-weight: var(--font-weight-content);
+      font-size: var(--font-size-content);
+      line-height: var(--line-height-content);
+      overflow-x: hidden;
+      background: #000;
+      color: var(--color-text-primary);
+    }
+
+    /* ============================================
+       LAYOUT UTILITIES
+       ============================================ */
+    .slide {
+      width: 960px;
+      height: 540px;
+      margin: 0 auto 20px;
+      display: flex;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .row {
+      flex-direction: row;
+    }
+
+    .col {
+      flex-direction: column;
+    }
+
+    .center {
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* ============================================
+       SPACING UTILITIES
+       ============================================ */
+    .gap-sm { gap: var(--spacing-xs); }
+    .gap-md { gap: var(--spacing-sm); }
+    .gap-lg { gap: var(--spacing-md); }
+    .gap-xl { gap: var(--spacing-lg); }
+
+    .p-8 { padding: var(--spacing-lg); }
+    .p-12 { padding: var(--spacing-xl); }
+    .p-16 { padding: var(--spacing-2xl); }
+
+    .mb-4 { margin-bottom: var(--spacing-sm); }
+    .mb-6 { margin-bottom: var(--spacing-md); }
+    .mb-8 { margin-bottom: var(--spacing-lg); }
+
+    .mt-4 { margin-top: var(--spacing-sm); }
+    .mt-6 { margin-top: var(--spacing-md); }
+    .mt-8 { margin-top: var(--spacing-lg); }
+
+    /* ============================================
+       TYPOGRAPHY UTILITIES
+       ============================================ */
+    .text-6xl { font-size: 3.75rem; }
+    .text-5xl { font-size: 3rem; }
+    .text-4xl { font-size: 2.25rem; }
+    .text-3xl { font-size: 1.875rem; }
+    .text-2xl { font-size: 1.5rem; }
+    .text-xl { font-size: 1.25rem; }
+    .text-lg { font-size: 1.125rem; }
+    .text-base { font-size: 1rem; }
+    .text-sm { font-size: 0.875rem; }
+
+    .font-bold { font-weight: 700; }
+    .font-semibold { font-weight: 600; }
+    .text-center { text-align: center; }
+
+    /* ============================================
+       COMPONENT STYLES
+       ============================================ */
+    .slide-title {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .slide-subtitle {
+      color: var(--color-text-secondary);
+    }
+
+    .slide-text {
+      color: var(--color-text-muted);
+    }
+
+    .card-rect {
+      padding: var(--spacing-lg);
+      background-color: var(--color-bg-surface);
+      color: var(--color-text-primary);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .img-container {
+      width: 100%;
+      flex: 1; /* Ocupar el espacio restante verticalmente */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 0; /* Eliminar padding extra */
+    }
+
+    .img-container img {
+      max-width: 100%;
+      max-height: 100%; /* Ocupar hasta el 100% de la altura disponible */
+      width: auto;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Sombra elegante */
+    }
+
+    .img-frame {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* Eliminar fondo y borde restrictivo para un look más limpio y amplio */
+      /* background-color: rgba(56, 189, 248, 0.1); */
+      /* border: 2px solid var(--color-primary); */
+    }
+
+    .img-frame img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    /* ============================================
+       FLIP CARD COMPONENT
+       ============================================ */
+    .flip-card-container {
+      perspective: 1000px;
+      cursor: pointer;
+      width: 280px;
+      height: 350px;
+    }
+
+    .flip-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transition: transform var(--transition-normal);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      background: linear-gradient(135deg, var(--color-bg-surface) 0%, var(--color-bg-base) 100%);
+      padding: var(--spacing-md);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      border: 2px solid var(--color-primary);
+    }
+
+    .flip-card-front {
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+    }
+
+    .flip-card-back {
+      transform: rotateY(180deg);
+      justify-content: center;
+      align-items: center;
+      overflow-y: auto;
+    }
+
+    .flip-card-icon {
+      font-size: 4rem;
+    }
+
+    .flip-card-title {
+      color: var(--color-primary);
+      font-weight: 700;
+    }
+
+    .flip-card-hint {
+      color: var(--color-text-secondary);
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .flip-card-content {
+      color: var(--color-text-secondary);
+      font-size: 0.85rem;
+      line-height: 1.7;
+      text-align: left;
+    }
+
+    /* ============================================
+       TABLE STYLES
+       ============================================ */
+    .table-container {
+      font-size: 0.75rem;
+      line-height: 1.5;
+      color: var(--color-text-secondary);
+      margin-top: var(--spacing-xs);
+    }
+
+    .table-container-small {
+      font-size: 0.7rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead tr {
+      background-color: var(--color-bg-surface);
+      border-bottom: 2px solid var(--color-primary);
+    }
+
+    th {
+      padding: 0.75rem;
+      color: var(--color-primary);
+      text-align: left;
+    }
+
+    th.text-center {
+      text-align: center;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--color-bg-muted);
+    }
+
+    tbody tr.subtotal {
+      background-color: var(--color-bg-surface);
+      border-bottom: 2px solid var(--color-primary);
+    }
+
+    tbody tr.total {
+      background-color: var(--color-bg-elevated);
+      border-top: 3px solid var(--color-primary);
+    }
+
+    td {
+      padding: 0.6rem;
+    }
+
+    td.text-center {
+      text-align: center;
+    }
+
+    .cost-highlight {
+      color: var(--color-warning);
+      font-weight: 700;
+    }
+
+    .cost-primary {
+      color: var(--color-primary);
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .table-note {
+      color: var(--color-text-muted);
+      font-size: 0.7rem;
+      padding: 0.8rem;
+    }
+
+    /* ============================================
+       LIST STYLES
+       ============================================ */
+    ul {
+      margin-left: var(--spacing-lg);
+      line-height: 1.8;
+    }
+
+    li {
+      list-style: disc;
+      margin-bottom: 0.75rem;
+      color: var(--color-text-secondary);
+    }
+
+    li:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ============================================
+       BACKGROUND UTILITIES
+       ============================================ */
+    .bg-gradient-primary {
+      background: linear-gradient(135deg, var(--color-bg-elevated) 0%, var(--color-bg-base) 100%);
+    }
+
+    .bg-dark {
+      background-color: var(--color-bg-base);
+    }
+
+    /* ============================================
+       PRESENTATION NAVIGATION SYSTEM
+       ============================================ */
+    .presentation-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .slides-wrapper {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      height: 100%;
+    }
+
+    .slide {
+      width: 100vw;
+      height: 100vh;
+      flex-shrink: 0;
+      display: flex;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slide.hidden {
+      display: none;
+    }
+
+    /* Navigation Controls */
+    .nav-controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1000;
+      background: rgba(15, 23, 42, 0.95);
+      padding: 8px 16px;
+      border-radius: 30px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-btn {
+      background: transparent;
+      color: var(--color-text-secondary);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--color-primary);
+    }
+
+    .nav-btn:disabled {
+      color: var(--color-text-muted);
+      cursor: not-allowed;
+      opacity: 0.3;
+    }
+
+    /* Paginador estilo Google */
+    .paginator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .page-num {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: all 0.2s;
+      border: none;
+      background: transparent;
+    }
+
+    .page-num:hover {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--color-primary);
+    }
+
+    .page-num.active {
+      background: var(--color-primary);
+      color: var(--color-primary-foreground);
+      font-weight: 700;
+    }
+
+    .page-num.sub-page {
+      font-size: 0.7rem;
+      width: 28px;
+      height: 28px;
+    }
+
+    /* Botón de menú */
+    .menu-btn {
+      background: transparent;
+      border: none;
+      color: var(--color-text-secondary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .menu-btn:hover {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--color-primary);
+    }
+
+    /* Menú desplegable */
+    .slide-menu {
+      position: absolute;
+      bottom: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.98);
+      border-radius: 12px;
+      padding: 8px 0;
+      min-width: 320px;
+      max-height: 400px;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 1001;
+    }
+
+    /* ============================================
+       CUSTOM SCROLLBARS - Estilo consistente
+       ============================================ */
+    
+    /* Scrollbar global - WebKit (Chrome, Safari, Edge) */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(30, 41, 59, 0.6);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
+      border-radius: 4px;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, #7dd3fc 0%, #38bdf8 100%);
+      background-clip: padding-box;
+    }
+
+    ::-webkit-scrollbar-corner {
+      background: rgba(30, 41, 59, 0.6);
+    }
+
+    /* Scrollbar global - Firefox */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #38bdf8 rgba(30, 41, 59, 0.6);
+    }
+
+    /* Menú específico - track con margen */
+    .slide-menu::-webkit-scrollbar-track {
+      margin: 8px 0;
+    }
+
+    .slide-menu.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .slide-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      color: var(--color-text-secondary);
+      font-size: 0.85rem;
+    }
+
+    .slide-menu-item:hover {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--color-text-primary);
+    }
+
+    .slide-menu-item.active {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--color-primary);
+      border-left: 3px solid var(--color-primary);
+    }
+
+    .slide-menu-item .menu-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--color-bg-surface);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .slide-menu-item.active .menu-num {
+      background: var(--color-primary);
+      color: var(--color-primary-foreground);
+    }
+
+    /* Keyboard Navigation Hint */
+    .keyboard-hint {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(15, 23, 42, 0.9);
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ============================================
+       UTILITY CLASSES
+       ============================================ */
+    .fill-width { flex: 1; }
+    .fill-height { flex: 1; display: flex; flex-direction: column; }
+    .overflow-y-auto { overflow-y: auto; }
+
+    /* ============================================
+       TOOLTIP COMPONENT
+       ============================================ */
+    .feature-item {
+      position: relative;
+      cursor: pointer;
+      padding: 0.3rem 0;
+      border-radius: 4px;
+      transition: background 0.2s;
+      list-style: none;
+      margin-left: -0.5rem;
+      padding-left: 0.5rem;
+    }
+
+    .feature-item:hover {
+      background: rgba(56, 189, 248, 0.1);
+    }
+
+    .feature-item .tooltip {
+      position: absolute;
+      left: 105%;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--color-bg-elevated);
+      border: 1px solid var(--color-primary);
+      border-radius: 8px;
+      padding: 0.6rem 0.8rem;
+      width: 220px;
+      font-size: 0.7rem;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 100;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-item:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .feature-item .tooltip::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 4px solid transparent;
+      border-right-color: var(--color-primary);
+    }
+
+    .tooltip-title {
+      color: var(--color-primary);
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+
+    /* Tooltip posicionado a la izquierda (para columnas de la derecha) */
+    .feature-item .tooltip-left {
+      left: auto;
+      right: 105%;
+    }
+
+    .feature-item .tooltip-left::before {
+      left: auto;
+      right: -8px;
+      border-left-color: var(--color-primary);
+      border-right-color: transparent;
+      border-top-color: transparent;
+      border-bottom-color: transparent;
+    }
+
+    /* Tooltip de error/problema (rojo) */
+    .tooltip-error {
+      border-color: #f87171 !important;
+    }
+
+    .tooltip-error::before {
+      border-left-color: #f87171 !important;
+    }
+
+    /* Tooltip posicionado arriba (para items en la parte inferior) */
+    .feature-item .tooltip-top {
+      left: 50%;
+      right: auto;
+      top: auto;
+      bottom: 100%;
+      transform: translateX(-50%);
+      margin-bottom: 8px;
+    }
+
+    .feature-item .tooltip-top::before {
+      left: 50%;
+      right: auto;
+      top: 100%;
+      bottom: auto;
+      transform: translateX(-50%);
+      border-left-color: transparent;
+      border-right-color: transparent;
+      border-top-color: var(--color-primary);
+      border-bottom-color: transparent;
+    }
+
+    /* ============================================
+       IMAGE MODAL / LIGHTBOX
+       ============================================ */
+    .image-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      cursor: zoom-out;
+    }
+
+    .image-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .image-modal img {
+      max-width: 95vw;
+      max-height: 95vh;
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .image-modal.active img {
+      transform: scale(1);
+    }
+
+    .image-modal-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2.5rem;
+      color: white;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+      z-index: 10001;
+    }
+
+    .image-modal-close:hover {
+      opacity: 1;
+    }
+
+    .image-modal-hint {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.85rem;
+    }
+
+    /* Hacer imágenes clickeables */
+    .slide img:not(.no-modal) {
+      cursor: zoom-in;
+      transition: transform 0.2s;
+    }
+
+    .slide img:not(.no-modal):hover {
+      transform: scale(1.02);
+    }
+
+    /* ============================================
+       MODAL FICHA DE PRODUCTO (estilo Apple/IMDb)
+       ============================================ */
+    .product-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.92);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(15px);
+    }
+
+    .product-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .product-modal-content {
+      width: 95%;
+      max-width: 1100px;
+      height: 85vh;
+      max-height: 700px;
+      background: var(--color-bg-elevated);
+      border-radius: 24px;
+      overflow: hidden;
+      transform: scale(0.95) translateY(20px);
+      transition: transform 0.4s ease;
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+      display: flex;
+      flex-direction: row;
+    }
+
+    .product-modal.active .product-modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Lado izquierdo - Galería de imágenes */
+    .product-modal-left {
+      width: 45%;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .product-modal-gallery {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-modal-left img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      transition: opacity 0.4s ease;
+    }
+
+    /* Controles de galería */
+    .gallery-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      color: white;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      backdrop-filter: blur(5px);
+      z-index: 5;
+    }
+
+    .gallery-nav:hover {
+      background: rgba(56, 189, 248, 0.6);
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .gallery-nav.prev { left: 10px; }
+    .gallery-nav.next { right: 10px; }
+
+    .gallery-nav:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .gallery-nav:disabled:hover {
+      background: rgba(0, 0, 0, 0.6);
+      transform: translateY(-50%) scale(1);
+    }
+
+    /* Dots de galería */
+    .gallery-dots {
+      position: absolute;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 5;
+    }
+
+    .gallery-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      transition: all 0.3s;
+      border: none;
+    }
+
+    .gallery-dot:hover {
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .gallery-dot.active {
+      background: var(--color-primary);
+      transform: scale(1.2);
+    }
+
+    /* Contador de imágenes */
+    .gallery-counter {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      color: white;
+      backdrop-filter: blur(5px);
+    }
+
+    .product-modal-badge {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .product-modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+
+    .product-modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    /* Lado derecho - Contenido */
+    .product-modal-right {
+      width: 55%;
+      padding: 2rem 2.5rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-modal-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .product-modal-tagline {
+      font-size: 1rem;
+      color: var(--color-text-muted);
+      margin-bottom: 1.2rem;
+      font-style: italic;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--color-bg-surface);
+    }
+
+    .product-modal-description {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--color-text-secondary);
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    .product-modal-features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .product-modal-feature {
+      background: var(--color-bg-surface);
+      padding: 0.8rem;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .product-modal-feature-icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .product-modal-feature-title {
+      font-weight: bold;
+      font-size: 0.75rem;
+      margin-bottom: 0.2rem;
+      color: var(--color-text-primary);
+    }
+
+    .product-modal-feature-desc {
+      font-size: 0.65rem;
+      color: var(--color-text-muted);
+    }
+
+    .product-modal-stats {
+      display: flex;
+      gap: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--color-bg-surface);
+    }
+
+    .product-modal-stat {
+      text-align: center;
+      flex: 1;
+    }
+
+    .product-modal-stat-value {
+      font-size: 1.4rem;
+      font-weight: bold;
+    }
+
+    .product-modal-stat-label {
+      font-size: 0.65rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Hacer productos clickeables */
+    .ia-product {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .ia-product:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+  </style>
+</head>
+
+<body class="theme-dark">
+  <div class="presentation-container">
+    <div class="keyboard-hint">
+      ← → Navegar | Espacio: Siguiente
+    </div>
+    <div class="slides-wrapper" id="slidesWrapper">
+
+      <!-- ============================================
+           SLIDE 1: PORTADA
+           ============================================ -->
+      <section class="slide p-16 col center bg-gradient-primary" data-slide="1">
+        <div style="position: relative; z-index: 2; text-align: center;">
+          <h1 class="text-6xl mb-4 font-bold slide-title">Salambay Developers</h1>
+          <h2 class="text-4xl mb-4 font-semibold slide-subtitle">Transformación Digital</h2>
+          <p class="text-2xl slide-text">De Constructora Local a Líder Digital en NY</p>
+          <p class="text-sm mt-8 slide-text">Propuesta de Ecosistema Digital • Diciembre 2025</p>
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 2: EL PROBLEMA (NUEVO)
+           ============================================ -->
+      <section class="slide p-16 col bg-dark" data-slide="2">
+        <h2 class="text-4xl mb-6 font-bold slide-title">El Desafío Actual</h2>
+        <div style="display: flex; gap: 2rem; flex: 1; align-items: center;">
+          <!-- Columna izquierda: Problemas -->
+          <div style="flex: 1; padding: 1.5rem;">
+            <h3 class="text-2xl mb-4 font-semibold" style="color: #f87171;">🚨 La Realidad Hoy</h3>
+            <ul style="font-size: 1rem; line-height: 2;">
+              <li><b>Presencia digital modesta:</b> ~100 seguidores en TikTok, 0 reseñas en Facebook</li>
+              <li><b>Leads perdidos:</b> Consultas en WhatsApp sin clasificar ni seguimiento</li>
+              <li><b>Competencia ganando:</b> Otros contractors ya captan clientes online</li>
+              <li><b>Procesos manuales:</b> Cotizaciones, seguimiento y contenido hechos "a mano"</li>
+              <li><b>Reputación invisible:</b> +10 años de experiencia sin prueba social digital</li>
+            </ul>
+          </div>
+          <!-- Columna derecha: Consecuencias -->
+          <div style="flex: 1; padding: 1.5rem; background: rgba(248, 113, 113, 0.1); border-radius: 12px; border: 1px solid #f87171;">
+            <h3 class="text-2xl mb-4 font-semibold" style="color: #fbbf24;">💰 Lo Que Está Costando</h3>
+            <div style="font-size: 1.1rem; line-height: 2.2; color: var(--color-text-secondary);">
+              <p>❌ Clientes que buscan "contractor near me" y encuentran a otros</p>
+              <p>❌ Leads calientes que se enfrían por falta de respuesta rápida</p>
+              <p>❌ Proyectos perdidos por no mostrar portafolio profesional</p>
+              <p>❌ Tiempo valioso gastado en tareas repetitivas</p>
+              <p style="margin-top: 1rem; color: #f87171; font-weight: bold; font-size: 1.3rem;">
+                = $50k - $100k/año en oportunidades perdidas
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 3: EL ECOSISTEMA DIGITAL - LA SOLUCIÓN
+           ============================================ -->
+      <section class="slide p-16 col center bg-dark" data-slide="3">
+        <h2 class="text-4xl mb-4 font-bold slide-title">La Solución: Ecosistema Digital Salambay</h2>
+        <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 1rem; overflow: hidden;">
+          <img src="./assets/images/ecosystem_overview.png" alt="Organismo Digital" style="max-width: 90%; max-height: 100%; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);">
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 3B: ESTRATEGIA - DIGITAL ECOSYSTEM CANVAS (NUEVO)
+           ============================================ -->
+      <section class="slide p-16 col center bg-dark" data-slide="3b">
+        <h2 class="text-3xl mb-4 font-bold slide-title">Estrategia: El Canvas del Negocio Digital</h2>
+        <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 1rem; overflow: hidden; flex-direction: column;">
+          <p class="slide-subtitle mb-4 text-center" style="font-size: 1rem; max-width: 800px;">
+            Una visión integral conectando <b>Cliente Ideal</b>, <b>Propuesta de Valor</b> y <b>Rentabilidad</b> a través de la tecnología.
+          </p>
+          <img src="./assets/images/digital_ecosystem_canvas.png" alt="Digital Ecosystem Canvas" style="max-width: 90%; max-height: 80%; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.4); border: 1px solid rgba(56, 189, 248, 0.2);">
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 4: EL RESULTADO - ANTES VS DESPUÉS
+           ============================================ -->
+      <section class="slide p-16 col bg-dark" data-slide="4">
+        <h2 class="text-4xl mb-4 font-bold slide-title">El Resultado: Antes vs Después</h2>
+        <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 1rem; overflow: hidden;">
+          <img src="./assets/images/before_after_comparison.png" alt="Antes vs Después" style="max-width: 90%; max-height: 100%; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);">
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 5: CÓMO FUNCIONA - JOURNEY DEL CLIENTE
+           ============================================ -->
+      <section class="slide p-16 col center bg-dark" data-slide="5">
+        <h2 class="text-4xl mb-4 font-bold slide-title">Experiencia del Cliente: De Visita a Proyecto</h2>
+        <div style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 1rem; overflow: hidden;">
+          <img src="./assets/images/customer_journey.png" alt="Journey del Cliente" style="max-width: 90%; max-height: 100%; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.4);">
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 6: EL CEREBRO DE SALAMBAY - IA INTELIGENTE
+           ============================================ -->
+      <section class="slide p-16 col bg-dark" data-slide="6">
+        <h2 class="text-3xl mb-2 font-bold slide-title">El Cerebro de Salambay: 3 Asistentes IA</h2>
+        <p class="slide-subtitle mb-4" style="font-size: 0.9rem;">Tecnología que trabaja 24/7 mientras tú cierras negocios</p>
+        
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 1rem; overflow-y: auto;">
+          
+          <!-- Producto 1: Lead Router -->
+          <div class="ia-product" data-product="lead-router" onclick="openProductModal('lead-router')" style="display: flex; gap: 1.5rem; background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(56, 189, 248, 0.03) 100%); border-radius: 16px; padding: 1.2rem; border: 1px solid rgba(56, 189, 248, 0.3);">
+            <div class="ia-product-image" style="width: 180px; height: 120px; flex-shrink: 0; background: linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid #38bdf8; overflow: hidden;">
+              <img src="./assets/images/products/lead_router.png" alt="Lead Router IA" class="no-modal" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size: 3rem;\'>🤖</span>';">
+            </div>
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem;">
+                <h3 style="color: #38bdf8; font-size: 1.3rem; font-weight: bold; margin: 0;">Asistente de Clasificación</h3>
+                <span style="background: #38bdf8; color: #0f172a; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: bold;">LEAD ROUTER</span>
+              </div>
+              <p style="color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0;">
+                <b style="color: #f1f5f9;">Tu secretario digital 24/7.</b> Recibe cada consulta, entiende la intención y clasifica automáticamente.
+              </p>
+              <div style="display: flex; gap: 1rem; margin-top: 0.6rem;">
+                <span style="color: #4ade80; font-size: 0.8rem;">✓ Respuesta en segundos</span>
+                <span style="color: #4ade80; font-size: 0.8rem;">✓ Clasifica automático</span>
+                <span style="color: var(--color-text-muted); font-size: 0.75rem; margin-left: auto;">🎬 Click para más</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Producto 2: Virtual Staging -->
+          <div class="ia-product" data-product="virtual-staging" onclick="openProductModal('virtual-staging')" style="display: flex; gap: 1.5rem; background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0.03) 100%); border-radius: 16px; padding: 1.2rem; border: 1px solid rgba(168, 85, 247, 0.3);">
+            <div class="ia-product-image" style="width: 180px; height: 120px; flex-shrink: 0; background: linear-gradient(135deg, #3b1d5c 0%, #0f172a 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid #a855f7; overflow: hidden;">
+              <img src="./assets/images/products/virtual_staging_main.png" alt="Virtual Staging IA" class="no-modal" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size: 3rem;\'>🏠</span>';">
+            </div>
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem;">
+                <h3 style="color: #a855f7; font-size: 1.3rem; font-weight: bold; margin: 0;">Diseñador Virtual</h3>
+                <span style="background: #a855f7; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: bold;">STAGING IA</span>
+              </div>
+              <p style="color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0;">
+                <b style="color: #f1f5f9;">Transforma fotos vacías en renders profesionales.</b> Visualiza el potencial antes de invertir.
+              </p>
+              <div style="display: flex; gap: 1rem; margin-top: 0.6rem;">
+                <span style="color: #4ade80; font-size: 0.8rem;">✓ Múltiples estilos</span>
+                <span style="color: #4ade80; font-size: 0.8rem;">✓ En minutos</span>
+                <span style="color: var(--color-text-muted); font-size: 0.75rem; margin-left: auto;">🎬 Click para más</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Producto 3: Content Generator -->
+          <div class="ia-product" data-product="content-generator" onclick="openProductModal('content-generator')" style="display: flex; gap: 1.5rem; background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(236, 72, 153, 0.03) 100%); border-radius: 16px; padding: 1.2rem; border: 1px solid rgba(236, 72, 153, 0.3);">
+            <div class="ia-product-image" style="width: 180px; height: 120px; flex-shrink: 0; background: linear-gradient(135deg, #5c1d3b 0%, #0f172a 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 2px solid #ec4899; overflow: hidden;">
+              <img src="./assets/images/products/content_generator.png" alt="Content Generator IA" class="no-modal" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size: 3rem;\'>✍️</span>';">
+            </div>
+            <div style="flex: 1;">
+              <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem;">
+                <h3 style="color: #ec4899; font-size: 1.3rem; font-weight: bold; margin: 0;">Redactor de Autoridad</h3>
+                <span style="background: #ec4899; color: white; padding: 2px 10px; border-radius: 12px; font-size: 0.7rem; font-weight: bold;">CONTENT IA</span>
+              </div>
+              <p style="color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0;">
+                <b style="color: #f1f5f9;">Blog posts SEO sin esfuerzo.</b> Contenido que posiciona en Google automáticamente.
+              </p>
+              <div style="display: flex; gap: 1rem; margin-top: 0.6rem;">
+                <span style="color: #4ade80; font-size: 0.8rem;">✓ SEO optimizado</span>
+                <span style="color: #4ade80; font-size: 0.8rem;">✓ Tu voz, tu estilo</span>
+                <span style="color: var(--color-text-muted); font-size: 0.75rem; margin-left: auto;">🎬 Click para más</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 7: BENEFICIOS Y ROI ESPERADO (NUEVO)
+           ============================================ -->
+      <section class="slide p-16 col bg-dark" data-slide="7">
+        <h2 class="text-4xl mb-6 font-bold slide-title">Beneficios: ¿Qué Gana Salambay?</h2>
+        <div style="display: flex; gap: 1.5rem; flex: 1;">
+          <!-- Columna 1: Captación -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(56, 189, 248, 0.05) 100%); border-radius: 12px; padding: 1.2rem; border: 1px solid var(--color-primary);">
+            <div style="font-size: 2.5rem; text-align: center;">📈</div>
+            <h3 class="text-xl font-bold mb-4" style="color: var(--color-primary); text-align: center;">Más Leads Calificados</h3>
+            <ul style="font-size: 0.9rem; line-height: 1.8; margin-left: 1rem;">
+              <li>Web optimizada para "contractor near me"</li>
+              <li>Asistente IA 24/7 respondiendo consultas</li>
+              <li>Leads clasificados automáticamente</li>
+              <li style="color: #4ade80; font-weight: bold;">Meta: +200% leads/mes</li>
+            </ul>
+          </div>
+          <!-- Columna 2: Conversión -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(74, 222, 128, 0.05) 100%); border-radius: 12px; padding: 1.2rem; border: 1px solid #4ade80;">
+            <div style="font-size: 2.5rem; text-align: center;">🎯</div>
+            <h3 class="text-xl font-bold mb-4" style="color: #4ade80; text-align: center;">Mayor Conversión</h3>
+            <ul style="font-size: 0.9rem; line-height: 1.8; margin-left: 1rem;">
+              <li>Respuesta instantánea = cliente caliente</li>
+              <li>Portafolio visual profesional</li>
+              <li>Staging virtual para mostrar potencial</li>
+              <li style="color: #4ade80; font-weight: bold;">Meta: 15% → 30% conversión</li>
+            </ul>
+          </div>
+          <!-- Columna 3: Reputación -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(251, 191, 36, 0.1) 0%, rgba(251, 191, 36, 0.05) 100%); border-radius: 12px; padding: 1.2rem; border: 1px solid #fbbf24;">
+            <div style="font-size: 2.5rem; text-align: center;">⭐</div>
+            <h3 class="text-xl font-bold mb-4" style="color: #fbbf24; text-align: center;">Reputación Digital</h3>
+            <ul style="font-size: 0.9rem; line-height: 1.8; margin-left: 1rem;">
+              <li>Blog con contenido de autoridad</li>
+              <li>Sistema de reseñas automatizado</li>
+              <li>Presencia consistente en redes</li>
+              <li style="color: #4ade80; font-weight: bold;">Meta: 50+ reseñas Google</li>
+            </ul>
+          </div>
+          <!-- Columna 4: Eficiencia -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%); border-radius: 12px; padding: 1.2rem; border: 1px solid #a855f7;">
+            <div style="font-size: 2.5rem; text-align: center;">⚡</div>
+            <h3 class="text-xl font-bold mb-4" style="color: #a855f7; text-align: center;">Ahorro de Tiempo</h3>
+            <ul style="font-size: 0.9rem; line-height: 1.8; margin-left: 1rem;">
+              <li>IA responde preguntas frecuentes</li>
+              <li>Contenido generado automáticamente</li>
+              <li>Dashboard con métricas claras</li>
+              <li style="color: #4ade80; font-weight: bold;">Meta: -10 hrs/semana admin</li>
+            </ul>
+          </div>
+        </div>
+        <p style="text-align: center; margin-top: 1rem; color: #4ade80; font-size: 1.2rem; font-weight: bold;">
+          💰 ROI Estimado: Recuperar inversión en 6-8 meses con 2-3 proyectos adicionales
+        </p>
+      </section>
+
+      <!-- ============================================
+           SLIDE 8: MÓDULO 0 - QUICK WINS (MEJORAS RÁPIDAS)
+           ============================================ -->
+      <section class="slide p-16 col bg-dark" data-slide="8">
+        <h2 class="text-3xl mb-2 font-bold slide-title">🚀 Quick Wins: Mejoras Inmediatas al Sitio Actual</h2>
+        <p class="slide-subtitle mb-4" style="font-size: 0.9rem;">Optimizaciones rápidas para salambaydevelopers.com sin reconstruir desde cero</p>
+        
+        <div style="display: flex; gap: 1rem; flex: 1;">
+          <!-- Paquete Starter -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%); border-radius: 12px; padding: 1rem; border: 2px solid #38bdf8; display: flex; flex-direction: column;">
+            <div style="text-align: center; margin-bottom: 0.8rem;">
+              <span style="font-size: 2rem;">⚡</span>
+              <h3 style="color: #38bdf8; font-size: 1.1rem; font-weight: bold; margin: 0.3rem 0;">STARTER</h3>
+              <div style="font-size: 1.8rem; font-weight: bold; color: #38bdf8;">$400</div>
+              <div style="font-size: 0.7rem; color: var(--color-text-muted);">~1 semana</div>
+            </div>
+            <ul style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0; padding-left: 0.5rem; flex: 1;">
+              <li class="feature-item">✅ Botón WhatsApp flotante
+                <div class="tooltip">
+                  <span class="tooltip-title">💬 WhatsApp Flotante</span>
+                  Botón verde siempre visible en esquina. Un clic = chat directo. Aumenta contactos 3x vs formulario tradicional.
+                </div>
+              </li>
+              <li class="feature-item">✅ Badge Google Reviews
+                <div class="tooltip">
+                  <span class="tooltip-title">⭐ Badge de Reseñas</span>
+                  Widget que muestra tu calificación de Google en tiempo real. Genera confianza instantánea en visitantes nuevos.
+                </div>
+              </li>
+              <li class="feature-item">✅ SEO básico (meta tags)
+                <div class="tooltip">
+                  <span class="tooltip-title">🔍 SEO Meta Tags</span>
+                  Títulos, descripciones y keywords optimizados para "contractor near me", "construction Long Island", etc.
+                </div>
+              </li>
+              <li class="feature-item">✅ Optimización de imágenes
+                <div class="tooltip">
+                  <span class="tooltip-title">🖼️ Imágenes Optimizadas</span>
+                  Compresión sin pérdida de calidad + lazy loading. Sitio carga 2-3x más rápido. Mejora SEO y experiencia.
+                </div>
+              </li>
+            </ul>
+            <div style="text-align: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(56, 189, 248, 0.3);">
+              <span style="color: var(--color-text-muted); font-size: 0.7rem;">Ideal para: Empezar YA</span>
+            </div>
+          </div>
+
+          <!-- Paquete Growth -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border-radius: 12px; padding: 1rem; border: 2px solid #fbbf24; display: flex; flex-direction: column;">
+            <div style="text-align: center; margin-bottom: 0.8rem;">
+              <span style="font-size: 2rem;">📈</span>
+              <h3 style="color: #fbbf24; font-size: 1.1rem; font-weight: bold; margin: 0.3rem 0;">GROWTH</h3>
+              <div style="font-size: 1.8rem; font-weight: bold; color: #fbbf24;">$800</div>
+              <div style="font-size: 0.7rem; color: var(--color-text-muted);">~2 semanas</div>
+            </div>
+            <ul style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0; padding-left: 0.5rem; flex: 1;">
+              <li class="feature-item">✅ Todo de Starter +
+                <div class="tooltip">
+                  <span class="tooltip-title">📦 Incluye Starter</span>
+                  WhatsApp, Google Reviews, SEO básico e imágenes optimizadas ya incluidos en este paquete.
+                </div>
+              </li>
+              <li class="feature-item">✅ Sección de testimonios
+                <div class="tooltip">
+                  <span class="tooltip-title">💬 Testimonios</span>
+                  Sección dedicada con 3-5 reseñas reales de clientes. Fotos, nombres y proyectos. Prueba social que convierte.
+                </div>
+              </li>
+              <li class="feature-item">✅ Google Analytics setup
+                <div class="tooltip">
+                  <span class="tooltip-title">📊 Analytics</span>
+                  Configuración completa de GA4 + eventos de conversión (clics WhatsApp, formularios, llamadas). Sabrás qué funciona.
+                </div>
+              </li>
+              <li class="feature-item">✅ CTAs más persuasivos
+                <div class="tooltip">
+                  <span class="tooltip-title">🎯 CTAs Mejorados</span>
+                  Botones con textos de acción específicos: "Cotiza tu remodelación gratis" en vez de "Contáctanos". Mayor conversión.
+                </div>
+              </li>
+              <li class="feature-item">✅ Formularios mejorados
+                <div class="tooltip">
+                  <span class="tooltip-title">📝 Formularios UX</span>
+                  Campos inteligentes, validación en tiempo real, confirmación visual. Menos fricción = más leads completados.
+                </div>
+              </li>
+            </ul>
+            <div style="text-align: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(251, 191, 36, 0.3);">
+              <span style="color: var(--color-text-muted); font-size: 0.7rem;">Ideal para: Más conversiones</span>
+            </div>
+          </div>
+
+          <!-- Paquete Pro -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(74, 222, 128, 0.2) 0%, rgba(74, 222, 128, 0.1) 100%); border-radius: 12px; padding: 1rem; border: 2px solid #4ade80; display: flex; flex-direction: column;">
+            <div style="text-align: center; margin-bottom: 0.8rem;">
+              <span style="background: #4ade80; color: #0f172a; padding: 2px 8px; border-radius: 10px; font-size: 0.65rem; font-weight: bold;">RECOMENDADO</span>
+              <span style="font-size: 2rem; display: block; margin-top: 0.3rem;">🏆</span>
+              <h3 style="color: #4ade80; font-size: 1.1rem; font-weight: bold; margin: 0.3rem 0;">PRO</h3>
+              <div style="font-size: 1.8rem; font-weight: bold; color: #4ade80;">$1,500</div>
+              <div style="font-size: 0.7rem; color: var(--color-text-muted);">~3-4 semanas</div>
+            </div>
+            <ul style="font-size: 0.75rem; color: var(--color-text-secondary); margin: 0; padding-left: 0.5rem; flex: 1;">
+              <li class="feature-item">✅ Todo de Growth +
+                <div class="tooltip tooltip-left">
+                  <span class="tooltip-title">📦 Incluye Growth</span>
+                  WhatsApp, Reviews, SEO, Analytics, testimonios, CTAs y formularios mejorados ya incluidos.
+                </div>
+              </li>
+              <li class="feature-item">✅ Blog con 2 artículos SEO
+                <div class="tooltip tooltip-left">
+                  <span class="tooltip-title">📝 Blog SEO</span>
+                  Estructura de blog + 2 artículos optimizados: "Permisos de construcción en Nassau" y "Guía de remodelación en NY". Tráfico orgánico.
+                </div>
+              </li>
+              <li class="feature-item">✅ 3 Casos de estudio
+                <div class="tooltip tooltip-left">
+                  <span class="tooltip-title">📋 Casos de Estudio</span>
+                  3 proyectos documentados: problema, solución, resultado. Con fotos, testimonios y datos. Demuestra experiencia real.
+                </div>
+              </li>
+              <li class="feature-item">✅ Galería antes/después
+                <div class="tooltip tooltip-left">
+                  <span class="tooltip-title">🖼️ Galería Interactiva</span>
+                  Slider comparativo de proyectos (antes/después). El visitante arrastra para ver la transformación. Muy impactante visualmente.
+                </div>
+              </li>
+            </ul>
+            <div style="text-align: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(74, 222, 128, 0.3);">
+              <span style="color: var(--color-text-muted); font-size: 0.7rem;">Ideal para: Autoridad + SEO</span>
+            </div>
+          </div>
+
+          <!-- Comparativa visual -->
+          <div style="flex: 1.2; background: var(--color-bg-surface); border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; justify-content: center;">
+            <h4 style="color: var(--color-primary); font-size: 0.9rem; margin-bottom: 0.8rem; text-align: center;">📊 Problemas Detectados en salambaydevelopers.com</h4>
+            <ul style="font-size: 0.7rem; color: var(--color-text-secondary); margin: 0; padding-left: 0.5rem;">
+              <li class="feature-item" style="color: #f87171;">❌ Sin WhatsApp
+                <div class="tooltip tooltip-left tooltip-error">
+                  <span class="tooltip-title" style="color: #f87171;">⚠️ Leads Perdidos</span>
+                  Clientes prefieren WhatsApp 10x más que formularios. Sin botón visible, pierdes consultas instantáneas.
+                </div>
+              </li>
+              <li class="feature-item" style="color: #f87171;">❌ Sin testimonios
+                <div class="tooltip tooltip-left tooltip-error">
+                  <span class="tooltip-title" style="color: #f87171;">⚠️ Sin Prueba Social</span>
+                  Visitantes no ven reseñas de clientes reales. Genera desconfianza. Competidores con testimonios ganan.
+                </div>
+              </li>
+              <li class="feature-item" style="color: #f87171;">❌ Sin blog (SEO débil)
+                <div class="tooltip tooltip-left tooltip-error">
+                  <span class="tooltip-title" style="color: #f87171;">⚠️ Invisible en Google</span>
+                  Sin contenido indexable, Google no te encuentra. Competidores con blog aparecen primero en búsquedas locales.
+                </div>
+              </li>
+              <li class="feature-item" style="color: #f87171;">❌ Sin Google Reviews
+                <div class="tooltip tooltip-left tooltip-error">
+                  <span class="tooltip-title" style="color: #f87171;">⚠️ Reputación Oculta</span>
+                  Tienes buenas reseñas en Google pero no las muestras en el sitio. Visitantes no las ven y buscan en otro lado.
+                </div>
+              </li>
+              <li class="feature-item" style="color: #f87171;">❌ CTAs genéricos
+                <div class="tooltip tooltip-left tooltip-error">
+                  <span class="tooltip-title" style="color: #f87171;">⚠️ Baja Conversión</span>
+                  "Get connected" no dice qué hacer. CTAs específicos como "Cotiza gratis" convierten 2-3x más.
+                </div>
+              </li>
+              <li class="feature-item" style="color: #f87171;">❌ Sin Analytics
+                <div class="tooltip tooltip-left tooltip-error">
+                  <span class="tooltip-title" style="color: #f87171;">⚠️ Ciego al Rendimiento</span>
+                  No sabes cuántas visitas tienes, de dónde vienen, ni qué páginas funcionan. Imposible optimizar.
+                </div>
+              </li>
+              <li class="feature-item" style="color: #f87171;">❌ Imágenes lentas
+                <div class="tooltip tooltip-left tooltip-error">
+                  <span class="tooltip-title" style="color: #f87171;">⚠️ Sitio Lento</span>
+                  Imágenes grandes sin comprimir. Sitio tarda en cargar. Google penaliza y visitantes abandonan.
+                </div>
+              </li>
+            </ul>
+            <div style="margin-top: 0.8rem; padding: 0.5rem; background: rgba(74, 222, 128, 0.1); border-radius: 6px; text-align: center;">
+              <span style="color: #4ade80; font-size: 0.75rem; font-weight: bold;">💡 Quick Wins resuelve todo esto</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nota -->
+        <div style="margin-top: 0.8rem; padding: 0.6rem 1rem; background: var(--color-bg-surface); border-radius: 8px; text-align: center;">
+          <p style="color: var(--color-text-secondary); font-size: 0.8rem; margin: 0;">
+            ⚡ <b>Mejoras sobre el sitio actual</b> (Squarespace). No requiere reconstruir. Resultados inmediatos. Puede combinarse con módulos del ecosistema completo.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 8B: PAQUETES MODULARES ECOSISTEMA
+           ============================================ -->
+      <section class="slide p-16 col bg-dark" data-slide="8b">
+        <h2 class="text-3xl mb-2 font-bold slide-title">Ecosistema Completo: Módulos Independientes</h2>
+        <p class="slide-subtitle mb-4" style="font-size: 0.9rem;">Para cuando estés listo para el siguiente nivel: webapp propia con IA</p>
+        
+        <div style="display: flex; gap: 0.8rem; flex: 1;">
+          <!-- Módulo 1: Fundación -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%); border-radius: 10px; padding: 0.8rem; border: 2px solid #38bdf8; display: flex; flex-direction: column;">
+            <div style="text-align: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 1.8rem;">🏗️</span>
+              <h3 style="color: #38bdf8; font-size: 0.95rem; font-weight: bold; margin: 0.3rem 0;">M1: Fundación Digital</h3>
+              <span style="background: #38bdf8; color: #0f172a; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: bold;">BASE</span>
+            </div>
+            <ul style="font-size: 0.7rem; color: var(--color-text-secondary); margin: 0; padding-left: 0.5rem; flex: 1;">
+              <li class="feature-item">Webapp + Portafolio
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">🌐 Web Profesional</span>
+                  Sitio propio con dominio personalizado. Galería de proyectos, página "Sobre nosotros", servicios y contacto.
+                </div>
+              </li>
+              <li class="feature-item">Diseño responsive
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">📱 Multi-dispositivo</span>
+                  Se adapta perfecto a móvil, tablet y desktop. 70% de usuarios visitan desde celular.
+                </div>
+              </li>
+              <li class="feature-item">SEO básico
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">🔍 Optimizado para Google</span>
+                  Meta tags, sitemap, schema markup para aparecer en búsquedas locales "contractor near me".
+                </div>
+              </li>
+              <li class="feature-item">Hosting configurado
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">☁️ Infraestructura Lista</span>
+                  Servidor configurado, SSL, dominio conectado. Listo para recibir tráfico sin preocuparte por lo técnico.
+                </div>
+              </li>
+            </ul>
+            <div style="text-align: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(56, 189, 248, 0.3);">
+              <div style="font-size: 1.1rem; font-weight: bold; color: #38bdf8;">$2,500</div>
+              <div style="font-size: 0.65rem; color: var(--color-text-muted);">6-8 semanas</div>
+            </div>
+          </div>
+
+          <!-- Módulo 2: Captura Leads -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(74, 222, 128, 0.15) 0%, rgba(74, 222, 128, 0.05) 100%); border-radius: 10px; padding: 0.8rem; border: 2px solid #4ade80; display: flex; flex-direction: column;">
+            <div style="text-align: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 1.8rem;">🎯</span>
+              <h3 style="color: #4ade80; font-size: 0.95rem; font-weight: bold; margin: 0.3rem 0;">M2: Captura Leads</h3>
+            </div>
+            <ul style="font-size: 0.7rem; color: var(--color-text-secondary); margin: 0; padding-left: 0.5rem; flex: 1;">
+              <li class="feature-item">Formularios inteligentes
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">📋 Formularios Smart</span>
+                  Multi-step forms que califican al lead: tipo de proyecto, presupuesto, timeline. Más info = mejor seguimiento.
+                </div>
+              </li>
+              <li class="feature-item">WhatsApp Business
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">💬 Chat Directo</span>
+                  Botón flotante + integración WhatsApp Business. El cliente escribe y llegas directo a su celular.
+                </div>
+              </li>
+              <li class="feature-item">Landing pages
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">🎯 Páginas de Conversión</span>
+                  Páginas específicas para campañas: "Remodelación cocinas NY", "Fix & Flip investors". Mejor conversión.
+                </div>
+              </li>
+              <li class="feature-item">Email automation
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">📧 Emails Automáticos</span>
+                  Secuencia de bienvenida, follow-up y nurturing. El lead recibe contenido sin que hagas nada.
+                </div>
+              </li>
+            </ul>
+            <div style="text-align: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(74, 222, 128, 0.3);">
+              <div style="font-size: 1.1rem; font-weight: bold; color: #4ade80;">$1,800</div>
+              <div style="font-size: 0.65rem; color: var(--color-text-muted);">3-4 semanas</div>
+            </div>
+          </div>
+
+          <!-- Módulo 3: IA LeadRouter -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border-radius: 10px; padding: 0.8rem; border: 2px solid #fbbf24; display: flex; flex-direction: column;">
+            <div style="text-align: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 1.8rem;">🤖</span>
+              <h3 style="color: #fbbf24; font-size: 0.95rem; font-weight: bold; margin: 0.3rem 0;">M3: IA LeadRouter</h3>
+              <span style="background: #fbbf24; color: #0f172a; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: bold;">IA</span>
+            </div>
+            <ul style="font-size: 0.7rem; color: var(--color-text-secondary); margin: 0; padding-left: 0.5rem; flex: 1;">
+              <li class="feature-item">Clasificación automática
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">🏷️ Clasificación IA</span>
+                  La IA lee el mensaje y clasifica: remodelación/venta, urgencia alta/media/baja, zona geográfica. Automático.
+                </div>
+              </li>
+              <li class="feature-item">Respuestas IA 24/7
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">🤖 Asistente Virtual</span>
+                  Responde preguntas frecuentes, agenda citas, recopila info inicial. Funciona mientras duermes.
+                </div>
+              </li>
+              <li class="feature-item">Dashboard leads
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">📊 Panel de Control</span>
+                  Vista unificada de todos los leads: estado, historial, próximos pasos. Todo organizado en un lugar.
+                </div>
+              </li>
+              <li class="feature-item">Priorización inteligente
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">⭐ Lead Scoring</span>
+                  Algoritmo que puntúa leads por probabilidad de cierre. Enfócate en los que más valen.
+                </div>
+              </li>
+            </ul>
+            <div style="text-align: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(251, 191, 36, 0.3);">
+              <div style="font-size: 1.1rem; font-weight: bold; color: #fbbf24;">$2,800</div>
+              <div style="font-size: 0.65rem; color: var(--color-text-muted);">4-5 semanas</div>
+            </div>
+          </div>
+
+          <!-- Módulo 4: IA Staging -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(168, 85, 247, 0.05) 100%); border-radius: 10px; padding: 0.8rem; border: 2px solid #a855f7; display: flex; flex-direction: column;">
+            <div style="text-align: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 1.8rem;">🖼️</span>
+              <h3 style="color: #a855f7; font-size: 0.95rem; font-weight: bold; margin: 0.3rem 0;">M4: Virtual Staging</h3>
+              <span style="background: #a855f7; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: bold;">IA</span>
+            </div>
+            <ul style="font-size: 0.7rem; color: var(--color-text-secondary); margin: 0; padding-left: 0.5rem; flex: 1;">
+              <li class="feature-item">Staging con IA
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">🛋️ Amueblado Virtual</span>
+                  La IA amuebla habitaciones vacías. El cliente ve cómo quedaría la remodelación terminada.
+                </div>
+              </li>
+              <li class="feature-item">Fotos → Renders
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">✨ Transformación Mágica</span>
+                  Sube foto del estado actual, la IA genera el "después" profesional. Ideal para vender la visión.
+                </div>
+              </li>
+              <li class="feature-item">Galería antes/después
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">🔄 Comparador Visual</span>
+                  Slider interactivo donde el visitante arrastra para ver la transformación. Muy persuasivo.
+                </div>
+              </li>
+              <li class="feature-item">Estilos personalizados
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">🎨 Multi-Estilo</span>
+                  Moderno, clásico, minimalista, farmhouse... Genera variantes para diferentes gustos de cliente.
+                </div>
+              </li>
+            </ul>
+            <div style="text-align: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(168, 85, 247, 0.3);">
+              <div style="font-size: 1.1rem; font-weight: bold; color: #a855f7;">$2,200</div>
+              <div style="font-size: 0.65rem; color: var(--color-text-muted);">3-4 semanas</div>
+            </div>
+          </div>
+
+          <!-- Módulo 5: Content IA -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(236, 72, 153, 0.15) 0%, rgba(236, 72, 153, 0.05) 100%); border-radius: 10px; padding: 0.8rem; border: 2px solid #ec4899; display: flex; flex-direction: column;">
+            <div style="text-align: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 1.8rem;">📝</span>
+              <h3 style="color: #ec4899; font-size: 0.95rem; font-weight: bold; margin: 0.3rem 0;">M5: Content IA</h3>
+              <span style="background: #ec4899; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.7rem; font-weight: bold;">IA</span>
+            </div>
+            <ul style="font-size: 0.7rem; color: var(--color-text-secondary); margin: 0; padding-left: 0.5rem; flex: 1;">
+              <li class="feature-item">Blog con IA
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">✍️ Contenido Automático</span>
+                  La IA genera artículos sobre construcción, permisos, tendencias. Tú solo revisas y publicas.
+                </div>
+              </li>
+              <li class="feature-item">SEO automático
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">🎯 Palabras Clave</span>
+                  Cada artículo optimizado para keywords como "kitchen remodel Long Island", "construction permits Nassau".
+                </div>
+              </li>
+              <li class="feature-item">Borradores listos
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">📄 Contenido Pre-hecho</span>
+                  Recibes borradores semanales listos para revisar. Solo ajustas y publicas. Ahorra 10+ horas/semana.
+                </div>
+              </li>
+              <li class="feature-item">Calendario editorial
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">📅 Planificación</span>
+                  Calendario de publicaciones, temas sugeridos por temporada, tracking de rendimiento por artículo.
+                </div>
+              </li>
+            </ul>
+            <div style="text-align: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(236, 72, 153, 0.3);">
+              <div style="font-size: 1.1rem; font-weight: bold; color: #ec4899;">$1,800</div>
+              <div style="font-size: 0.65rem; color: var(--color-text-muted);">3-4 semanas</div>
+            </div>
+          </div>
+
+          <!-- Módulo 6: Backoffice -->
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(20, 184, 166, 0.15) 0%, rgba(20, 184, 166, 0.05) 100%); border-radius: 10px; padding: 0.8rem; border: 2px solid #14b8a6; display: flex; flex-direction: column;">
+            <div style="text-align: center; margin-bottom: 0.5rem;">
+              <span style="font-size: 1.8rem;">📊</span>
+              <h3 style="color: #14b8a6; font-size: 0.95rem; font-weight: bold; margin: 0.3rem 0;">M6: Backoffice</h3>
+            </div>
+            <ul style="font-size: 0.7rem; color: var(--color-text-secondary); margin: 0; padding-left: 0.5rem; flex: 1;">
+              <li class="feature-item">Panel admin
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">⚙️ Control Total</span>
+                  Administra contenido, usuarios, configuraciones desde una interfaz simple. Sin tocar código.
+                </div>
+              </li>
+              <li class="feature-item">Métricas y KPIs
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">📈 Dashboard Ejecutivo</span>
+                  Visitas, leads, conversiones, fuentes de tráfico. Todo en un vistazo para tomar decisiones.
+                </div>
+              </li>
+              <li class="feature-item">Gestión clientes
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">👥 CRM Simple</span>
+                  Historial de interacciones, notas, estado del proyecto. No pierdas contexto de ningún cliente.
+                </div>
+              </li>
+              <li class="feature-item">Reportes automáticos
+                <div class="tooltip tooltip-top">
+                  <span class="tooltip-title">📊 Reportes Semanales</span>
+                  Recibe resumen semanal: leads nuevos, rendimiento del sitio, acciones sugeridas. Por email.
+                </div>
+              </li>
+            </ul>
+            <div style="text-align: center; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(20, 184, 166, 0.3);">
+              <div style="font-size: 1.1rem; font-weight: bold; color: #14b8a6;">$2,000</div>
+              <div style="font-size: 0.65rem; color: var(--color-text-muted);">4-5 semanas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumen -->
+        <div style="display: flex; gap: 1rem; margin-top: 0.8rem;">
+          <div style="flex: 1; background: var(--color-bg-surface); border-radius: 8px; padding: 0.6rem 1rem; text-align: center;">
+            <span style="color: var(--color-text-muted); font-size: 0.8rem;">Suma módulos individuales:</span>
+            <span style="color: var(--color-text-secondary); font-size: 1rem; font-weight: bold; margin-left: 0.5rem;">$13,100</span>
+          </div>
+          <div style="flex: 1.5; background: linear-gradient(135deg, rgba(74, 222, 128, 0.2) 0%, rgba(74, 222, 128, 0.1) 100%); border-radius: 8px; padding: 0.6rem 1rem; text-align: center; border: 2px solid #4ade80;">
+            <span style="color: #4ade80; font-size: 0.8rem;">🎁 PAQUETE COMPLETO (6 módulos):</span>
+            <span style="text-decoration: line-through; color: #94a3b8; font-size: 0.9rem; margin-left: 0.5rem;">$13,100</span>
+            <span style="color: #4ade80; font-size: 1.2rem; font-weight: bold; margin-left: 0.5rem;">$10,500</span>
+            <span style="background: #4ade80; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; margin-left: 0.5rem;">-20%</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 8C: RUTA DE IMPLEMENTACIÓN SUGERIDA
+           ============================================ -->
+      <section class="slide p-16 col bg-dark" data-slide="8c">
+        <h2 class="text-3xl mb-4 font-bold slide-title">Ruta de Implementación Sugerida</h2>
+        <p class="slide-subtitle mb-4" style="font-size: 0.9rem;">Empieza con lo esencial y escala según resultados</p>
+        
+        <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 1rem;">
+          <!-- Fase 1 -->
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #38bdf8, #0ea5e9); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <span style="font-size: 1.5rem;">🚀</span>
+              <span style="color: white; font-weight: bold; font-size: 0.8rem;">FASE 1</span>
+            </div>
+            <div style="flex: 1; background: rgba(56, 189, 248, 0.1); border-radius: 12px; padding: 1rem; border-left: 4px solid #38bdf8;">
+              <h3 style="color: #38bdf8; font-weight: bold; margin-bottom: 0.3rem;">Fundación + Captura Leads</h3>
+              <p style="color: var(--color-text-secondary); font-size: 0.85rem; margin: 0;">Webapp profesional con formularios y WhatsApp. <b>Empiezas a captar leads desde el día 1.</b></p>
+            </div>
+            <div style="text-align: right; min-width: 100px;">
+              <div style="color: #38bdf8; font-size: 1.3rem; font-weight: bold;">$4,300</div>
+              <div style="color: var(--color-text-muted); font-size: 0.75rem;">~10 semanas</div>
+            </div>
+          </div>
+
+          <!-- Flecha -->
+          <div style="text-align: center; color: var(--color-text-muted);">
+            <span style="font-size: 1.5rem;">↓</span>
+            <span style="font-size: 0.8rem; margin-left: 0.5rem;">Valida tracción, luego escala</span>
+          </div>
+
+          <!-- Fase 2 -->
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #fbbf24, #f59e0b); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <span style="font-size: 1.5rem;">🤖</span>
+              <span style="color: white; font-weight: bold; font-size: 0.8rem;">FASE 2</span>
+            </div>
+            <div style="flex: 1; background: rgba(251, 191, 36, 0.1); border-radius: 12px; padding: 1rem; border-left: 4px solid #fbbf24;">
+              <h3 style="color: #fbbf24; font-weight: bold; margin-bottom: 0.3rem;">+ IA LeadRouter</h3>
+              <p style="color: var(--color-text-secondary); font-size: 0.85rem; margin: 0;">Automatiza clasificación y respuestas 24/7. <b>Convierte más leads sin esfuerzo manual.</b></p>
+            </div>
+            <div style="text-align: right; min-width: 100px;">
+              <div style="color: #fbbf24; font-size: 1.3rem; font-weight: bold;">+$2,800</div>
+              <div style="color: var(--color-text-muted); font-size: 0.75rem;">+4-5 semanas</div>
+            </div>
+          </div>
+
+          <!-- Flecha -->
+          <div style="text-align: center; color: var(--color-text-muted);">
+            <span style="font-size: 1.5rem;">↓</span>
+            <span style="font-size: 0.8rem; margin-left: 0.5rem;">Con flujo de leads estable, potencia contenido</span>
+          </div>
+
+          <!-- Fase 3 -->
+          <div style="display: flex; align-items: center; gap: 1rem;">
+            <div style="width: 100px; height: 100px; background: linear-gradient(135deg, #a855f7, #8b5cf6); border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+              <span style="font-size: 1.5rem;">✨</span>
+              <span style="color: white; font-weight: bold; font-size: 0.8rem;">FASE 3</span>
+            </div>
+            <div style="flex: 1; background: rgba(168, 85, 247, 0.1); border-radius: 12px; padding: 1rem; border-left: 4px solid #a855f7;">
+              <h3 style="color: #a855f7; font-weight: bold; margin-bottom: 0.3rem;">+ Staging + Content IA + Backoffice</h3>
+              <p style="color: var(--color-text-secondary); font-size: 0.85rem; margin: 0;">Ecosistema completo con IA visual, blog automatizado y métricas. <b>Dominio digital total.</b></p>
+            </div>
+            <div style="text-align: right; min-width: 100px;">
+              <div style="color: #a855f7; font-size: 1.3rem; font-weight: bold;">+$6,000</div>
+              <div style="color: var(--color-text-muted); font-size: 0.75rem;">+10-12 semanas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Resumen final -->
+        <div style="display: flex; gap: 1rem; margin-top: 1rem;">
+          <div style="flex: 1; background: var(--color-bg-surface); border-radius: 8px; padding: 0.8rem; text-align: center;">
+            <div style="color: var(--color-text-muted); font-size: 0.75rem;">OPCIÓN MÍNIMA VIABLE</div>
+            <div style="color: #38bdf8; font-size: 1.5rem; font-weight: bold;">$4,300</div>
+            <div style="color: var(--color-text-secondary); font-size: 0.8rem;">Fase 1 únicamente</div>
+          </div>
+          <div style="flex: 1; background: var(--color-bg-surface); border-radius: 8px; padding: 0.8rem; text-align: center;">
+            <div style="color: var(--color-text-muted); font-size: 0.75rem;">OPCIÓN RECOMENDADA</div>
+            <div style="color: #fbbf24; font-size: 1.5rem; font-weight: bold;">$7,100</div>
+            <div style="color: var(--color-text-secondary); font-size: 0.8rem;">Fase 1 + 2</div>
+          </div>
+          <div style="flex: 1; background: linear-gradient(135deg, rgba(74, 222, 128, 0.2) 0%, rgba(74, 222, 128, 0.1) 100%); border-radius: 8px; padding: 0.8rem; text-align: center; border: 2px solid #4ade80;">
+            <div style="color: #4ade80; font-size: 0.75rem; font-weight: bold;">🎁 ECOSISTEMA COMPLETO</div>
+            <div style="color: #4ade80; font-size: 1.5rem; font-weight: bold;">$10,500</div>
+            <div style="color: var(--color-text-secondary); font-size: 0.8rem;">Todas las fases (-20%)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 9: POR QUÉ NOSOTROS
+           ============================================ -->
+      <section class="slide p-16 col bg-dark" data-slide="9">
+        <h2 class="text-4xl mb-6 font-bold slide-title">¿Por Qué Trabajar Con Nosotros?</h2>
+        <div style="display: flex; gap: 2rem; flex: 1; align-items: center; justify-content: center;">
+          <!-- Columna izquierda -->
+          <div style="flex: 1; max-width: 400px;">
+            <div style="background: var(--color-bg-surface); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid #4ade80;">
+              <h3 class="text-xl font-bold mb-4" style="color: #4ade80;">💰 Inversión Inteligente</h3>
+              <p style="color: var(--color-text-secondary); line-height: 1.6;">
+                Modelo Bootstrap: máxima calidad, mínimo costo. Sin equipos inflados ni gastos innecesarios. Cada dólar va directo al producto.
+              </p>
+            </div>
+            <div style="background: var(--color-bg-surface); border-radius: 12px; padding: 1.5rem; border-left: 4px solid #fbbf24;">
+              <h3 class="text-xl font-bold mb-4" style="color: #fbbf24;">🤖 IA de Verdad, No Marketing</h3>
+              <p style="color: var(--color-text-secondary); line-height: 1.6;">
+                Implementamos IA que funciona: clasificación de leads, staging virtual, generación de contenido. No buzzwords, sino herramientas que ahorran tiempo real.
+              </p>
+            </div>
+          </div>
+          <!-- Columna derecha -->
+          <div style="flex: 1; max-width: 400px;">
+            <div style="background: var(--color-bg-surface); border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem; border-left: 4px solid #a855f7;">
+              <h3 class="text-xl font-bold mb-4" style="color: #a855f7;">🤝 Socio, No Proveedor</h3>
+              <p style="color: var(--color-text-secondary); line-height: 1.6;">
+                Buscamos una relación a largo plazo. Tu éxito es nuestro éxito. Acompañamiento continuo, no solo entrega y adiós.
+              </p>
+            </div>
+            <div style="background: var(--color-bg-surface); border-radius: 12px; padding: 1.5rem; border-left: 4px solid var(--color-primary);">
+              <h3 class="text-xl font-bold mb-4" style="color: var(--color-primary);">📦 Modelo Modular</h3>
+              <p style="color: var(--color-text-secondary); line-height: 1.6;">
+                Empieza pequeño, escala según resultados. Sin compromisos gigantes. Pagas por lo que necesitas, cuando lo necesitas.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 10: PRÓXIMOS PASOS
+           ============================================ -->
+      <section class="slide p-16 col bg-dark" data-slide="10">
+        <h2 class="text-4xl mb-6 font-bold slide-title">Próximos Pasos: ¿Qué Sigue?</h2>
+        <div style="display: flex; gap: 1.5rem; flex: 1; align-items: center; justify-content: center;">
+          <!-- Paso 1 -->
+          <div style="text-align: center; flex: 1;">
+            <div style="width: 80px; height: 80px; background: var(--color-primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem; color: var(--color-primary-foreground); font-weight: bold;">1</div>
+            <h3 class="text-xl font-bold mb-4" style="color: var(--color-primary);">Reunión de Kick-off</h3>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem;">
+              60 min para alinear visión, prioridades y definir alcance del MVP
+            </p>
+            <p style="color: var(--color-text-muted); font-size: 0.8rem; margin-top: 0.5rem;">📅 Esta semana</p>
+          </div>
+          <!-- Flecha -->
+          <div style="font-size: 2rem; color: var(--color-primary);">→</div>
+          <!-- Paso 2 -->
+          <div style="text-align: center; flex: 1;">
+            <div style="width: 80px; height: 80px; background: #4ade80; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem; color: var(--color-primary-foreground); font-weight: bold;">2</div>
+            <h3 class="text-xl font-bold mb-4" style="color: #4ade80;">Propuesta Formal</h3>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem;">
+              Documento con alcance detallado, cronograma y términos de pago
+            </p>
+            <p style="color: var(--color-text-muted); font-size: 0.8rem; margin-top: 0.5rem;">📅 3-5 días después</p>
+          </div>
+          <!-- Flecha -->
+          <div style="font-size: 2rem; color: var(--color-primary);">→</div>
+          <!-- Paso 3 -->
+          <div style="text-align: center; flex: 1;">
+            <div style="width: 80px; height: 80px; background: #fbbf24; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem; color: var(--color-primary-foreground); font-weight: bold;">3</div>
+            <h3 class="text-xl font-bold mb-4" style="color: #fbbf24;">Firma & Arranque</h3>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem;">
+              Anticipo del 30%, accesos y comenzamos Fase 1: Investigación
+            </p>
+            <p style="color: var(--color-text-muted); font-size: 0.8rem; margin-top: 0.5rem;">📅 Semana siguiente</p>
+          </div>
+          <!-- Flecha -->
+          <div style="font-size: 2rem; color: var(--color-primary);">→</div>
+          <!-- Paso 4 -->
+          <div style="text-align: center; flex: 1;">
+            <div style="width: 80px; height: 80px; background: #a855f7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 2rem; color: white; font-weight: bold;">🚀</div>
+            <h3 class="text-xl font-bold mb-4" style="color: #a855f7;">MVP en Vivo</h3>
+            <p style="color: var(--color-text-secondary); font-size: 0.95rem;">
+              Salambay con ecosistema digital completo funcionando
+            </p>
+            <p style="color: var(--color-text-muted); font-size: 0.8rem; margin-top: 0.5rem;">📅 ~4.5 meses</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============================================
+           SLIDE 11: CIERRE E INVITACIÓN
+           ============================================ -->
+      <section class="slide col bg-dark" data-slide="11" style="padding: 0; overflow: hidden;">
+        <!-- Fondo con imagen y overlay -->
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('./assets/images/backgrounds/closing_bg.png') center/cover no-repeat; opacity: 0.15;"></div>
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 50%, rgba(15, 23, 42, 0.95) 100%);"></div>
+        
+        <div style="position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; padding: 2rem 3rem;">
+          
+          <!-- Header con quote -->
+          <div style="text-align: center; margin-bottom: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">🚀</div>
+            <h2 style="font-size: 2.2rem; font-weight: bold; color: #f1f5f9; margin: 0; line-height: 1.2;">
+              Es Hora de <span style="background: linear-gradient(90deg, #38bdf8, #4ade80); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Dominar</span> el Mercado Digital
+            </h2>
+            <p style="color: var(--color-text-muted); font-size: 1rem; margin-top: 0.5rem; font-style: italic;">
+              "Más de 10 años construyendo casas. Ahora, construyamos su imperio digital."
+            </p>
+          </div>
+
+          <!-- Contenido principal en dos columnas -->
+          <div style="display: flex; gap: 2rem; flex: 1;">
+            
+            <!-- Columna izquierda: Opciones de inversión -->
+            <div style="flex: 1.2;">
+              <h3 style="color: var(--color-primary); font-size: 1rem; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">
+                📦 Elige Tu Camino
+              </h3>
+              
+              <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem;">
+                <!-- Quick Wins -->
+                <div style="background: linear-gradient(135deg, rgba(168, 85, 247, 0.15) 0%, rgba(168, 85, 247, 0.05) 100%); border-radius: 12px; padding: 0.8rem; border: 1px solid rgba(168, 85, 247, 0.4); transition: all 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                    <span style="font-size: 1.2rem;">⚡</span>
+                    <span style="color: #a855f7; font-weight: bold; font-size: 0.85rem;">QUICK WINS</span>
+                  </div>
+                  <div style="font-size: 1.5rem; font-weight: bold; color: #a855f7;">$400 - $1,500</div>
+                  <div style="color: var(--color-text-muted); font-size: 0.7rem;">Mejoras inmediatas al sitio actual</div>
+                </div>
+                
+                <!-- Fase 1 -->
+                <div style="background: linear-gradient(135deg, rgba(56, 189, 248, 0.15) 0%, rgba(56, 189, 248, 0.05) 100%); border-radius: 12px; padding: 0.8rem; border: 1px solid rgba(56, 189, 248, 0.4); transition: all 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                    <span style="font-size: 1.2rem;">🏗️</span>
+                    <span style="color: #38bdf8; font-weight: bold; font-size: 0.85rem;">FASE 1</span>
+                  </div>
+                  <div style="font-size: 1.5rem; font-weight: bold; color: #38bdf8;">$4,300</div>
+                  <div style="color: var(--color-text-muted); font-size: 0.7rem;">Fundación Digital + Captura Leads</div>
+                </div>
+                
+                <!-- Fase 1+2 -->
+                <div style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.15) 0%, rgba(251, 191, 36, 0.05) 100%); border-radius: 12px; padding: 0.8rem; border: 1px solid rgba(251, 191, 36, 0.4); transition: all 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                    <span style="font-size: 1.2rem;">🤖</span>
+                    <span style="color: #fbbf24; font-weight: bold; font-size: 0.85rem;">FASE 1+2</span>
+                  </div>
+                  <div style="font-size: 1.5rem; font-weight: bold; color: #fbbf24;">$7,100</div>
+                  <div style="color: var(--color-text-muted); font-size: 0.7rem;">+ IA LeadRouter inteligente</div>
+                </div>
+                
+                <!-- Completo -->
+                <div style="background: linear-gradient(135deg, rgba(74, 222, 128, 0.2) 0%, rgba(74, 222, 128, 0.05) 100%); border-radius: 12px; padding: 0.8rem; border: 2px solid #4ade80; position: relative; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                  <div style="position: absolute; top: -8px; right: 10px; background: #4ade80; color: #0f172a; padding: 2px 8px; border-radius: 10px; font-size: 0.6rem; font-weight: bold;">MEJOR VALOR</div>
+                  <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+                    <span style="font-size: 1.2rem;">🎁</span>
+                    <span style="color: #4ade80; font-weight: bold; font-size: 0.85rem;">COMPLETO</span>
+                  </div>
+                  <div style="font-size: 1.5rem; font-weight: bold; color: #4ade80;">$10,500 <span style="font-size: 0.8rem; color: var(--color-text-muted); text-decoration: line-through;">$13,100</span></div>
+                  <div style="color: var(--color-text-muted); font-size: 0.7rem;">6 módulos con 20% descuento</div>
+                </div>
+              </div>
+              
+              <!-- Tarifa -->
+              <div style="margin-top: 0.8rem; padding: 0.6rem 1rem; background: rgba(74, 222, 128, 0.1); border-radius: 10px; border: 1px dashed rgba(74, 222, 128, 0.4);">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;">
+                  <div style="text-align: center;">
+                    <div style="color: #4ade80; font-size: 1.3rem; font-weight: bold;">$20/hr</div>
+                    <div style="color: var(--color-text-muted); font-size: 0.65rem;">TARIFA</div>
+                  </div>
+                  <div style="color: var(--color-text-muted);">|</div>
+                  <div style="text-align: center;">
+                    <div style="color: #38bdf8; font-size: 1.3rem; font-weight: bold;">~90 hrs</div>
+                    <div style="color: var(--color-text-muted); font-size: 0.65rem;">POR MES</div>
+                  </div>
+                  <div style="color: var(--color-text-muted);">|</div>
+                  <div style="text-align: center;">
+                    <div style="color: #fbbf24; font-size: 1.3rem; font-weight: bold;">$1,800</div>
+                    <div style="color: var(--color-text-muted); font-size: 0.65rem;">MENSUAL</div>
+                  </div>
+                  <div style="color: var(--color-text-muted);">|</div>
+                  <div style="text-align: center;">
+                    <div style="color: #f87171; font-size: 1.3rem; font-weight: bold;">95%</div>
+                    <div style="color: var(--color-text-muted); font-size: 0.65rem;">AHORRO vs NY</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Columna derecha: CTA y garantías -->
+            <div style="flex: 0.8; display: flex; flex-direction: column; justify-content: space-between;">
+              
+              <!-- Garantías -->
+              <div>
+                <h3 style="color: var(--color-primary); font-size: 1rem; margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">
+                  ✅ Lo Que Garantizo
+                </h3>
+                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                  <div style="display: flex; align-items: center; gap: 0.8rem; padding: 0.5rem; background: var(--color-bg-surface); border-radius: 8px;">
+                    <span style="font-size: 1.2rem;">🎯</span>
+                    <div>
+                      <div style="color: var(--color-text-primary); font-size: 0.85rem; font-weight: bold;">Comunicación Directa</div>
+                      <div style="color: var(--color-text-muted); font-size: 0.7rem;">Sin intermediarios, hablas conmigo</div>
+                    </div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.8rem; padding: 0.5rem; background: var(--color-bg-surface); border-radius: 8px;">
+                    <span style="font-size: 1.2rem;">⚡</span>
+                    <div>
+                      <div style="color: var(--color-text-primary); font-size: 0.85rem; font-weight: bold;">Entregas Incrementales</div>
+                      <div style="color: var(--color-text-muted); font-size: 0.7rem;">Ves avances cada semana</div>
+                    </div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.8rem; padding: 0.5rem; background: var(--color-bg-surface); border-radius: 8px;">
+                    <span style="font-size: 1.2rem;">🔄</span>
+                    <div>
+                      <div style="color: var(--color-text-primary); font-size: 0.85rem; font-weight: bold;">Iteraciones Incluidas</div>
+                      <div style="color: var(--color-text-muted); font-size: 0.7rem;">Ajustes hasta que quedes satisfecho</div>
+                    </div>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.8rem; padding: 0.5rem; background: var(--color-bg-surface); border-radius: 8px;">
+                    <span style="font-size: 1.2rem;">📚</span>
+                    <div>
+                      <div style="color: var(--color-text-primary); font-size: 0.85rem; font-weight: bold;">Documentación Completa</div>
+                      <div style="color: var(--color-text-muted); font-size: 0.7rem;">Todo queda documentado</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- CTA -->
+              <div style="text-align: center; margin-top: 1rem;">
+                <a href="https://wa.me/573168689852?text=Hola%20Alexander,%20me%20interesa%20la%20propuesta%20de%20Salambay%20Developers.%20%C2%BFPodemos%20agendar%20una%20llamada?" target="_blank" style="text-decoration: none; display: inline-block; padding: 1rem 2.5rem; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); border-radius: 50px; transition: all 0.3s; box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);" onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 35px rgba(37, 211, 102, 0.5)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(37, 211, 102, 0.4)';">
+                  <div style="display: flex; align-items: center; gap: 0.8rem;">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    <div style="text-align: left;">
+                      <div style="color: white; font-size: 1.1rem; font-weight: bold;">¡Conversemos Ahora!</div>
+                      <div style="color: rgba(255,255,255,0.8); font-size: 0.75rem;">Respuesta en menos de 2 horas</div>
+                    </div>
+                  </div>
+                </a>
+                
+                <!-- Contacto -->
+                <div style="margin-top: 1rem; padding: 0.8rem; background: var(--color-bg-surface); border-radius: 12px;">
+                  <div style="display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                    <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #38bdf8, #4ade80); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">👨‍💻</div>
+                    <div style="text-align: left;">
+                      <div style="color: var(--color-text-primary); font-weight: bold; font-size: 1rem;">Alexander Mina</div>
+                      <div style="color: var(--color-text-muted); font-size: 0.75rem;">Ingeniero de Sistemas Senior | +10 años exp.</div>
+                      <div style="color: var(--color-primary); font-size: 0.8rem;">📧 aquisiesalex@gmail.com</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="nav-controls">
+      <!-- Botón de menú -->
+      <button class="menu-btn" id="menuBtn" onclick="toggleSlideMenu()" title="Menú de slides">☰</button>
+      
+      <!-- Flecha anterior -->
+      <button class="nav-btn" id="prevBtn" onclick="previousSlide()" title="Anterior (←)">‹</button>
+      
+      <!-- Paginador numérico -->
+      <div class="paginator" id="paginator">
+        <!-- Se genera dinámicamente con JavaScript -->
+      </div>
+      
+      <!-- Flecha siguiente -->
+      <button class="nav-btn" id="nextBtn" onclick="nextSlide()" title="Siguiente (→)">›</button>
+    </div>
+
+    <!-- Menú desplegable de slides -->
+    <div class="slide-menu" id="slideMenu">
+      <!-- Se genera dinámicamente con JavaScript -->
+    </div>
+  </div>
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script>
+    let currentSlideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const slidesWrapper = document.getElementById('slidesWrapper');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const paginator = document.getElementById('paginator');
+    const slideMenu = document.getElementById('slideMenu');
+
+    // Títulos de los slides para el menú
+    const slideTitles = [
+      { num: '1', title: 'Portada' },
+      { num: '2', title: 'El Problema' },
+      { num: '3', title: 'Ecosistema Digital' },
+      { num: '3b', title: 'Canvas Estratégico' },
+      { num: '4', title: 'Antes vs Después' },
+      { num: '5', title: 'Journey del Cliente' },
+      { num: '6', title: 'Cerebro IA' },
+      { num: '7', title: 'Beneficios/ROI' },
+      { num: '8', title: 'Quick Wins' },
+      { num: '8b', title: 'Módulos Ecosistema' },
+      { num: '8c', title: 'Ruta de Implementación' },
+      { num: '9', title: 'Por Qué Nosotros' },
+      { num: '10', title: 'Próximos Pasos' },
+      { num: '11', title: 'Cierre + Contacto' }
+    ];
+
+    // Generar paginador
+    function generatePaginator() {
+      paginator.innerHTML = '';
+      slideTitles.forEach((slide, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'page-num' + (slide.num.includes('b') || slide.num.includes('c') ? ' sub-page' : '');
+        btn.textContent = slide.num;
+        btn.title = slide.title;
+        btn.onclick = () => goToSlide(index);
+        paginator.appendChild(btn);
+      });
+      updatePaginator();
+    }
+
+    // Actualizar paginador activo
+    function updatePaginator() {
+      const pageNums = paginator.querySelectorAll('.page-num');
+      pageNums.forEach((btn, index) => {
+        btn.classList.toggle('active', index === currentSlideIndex);
+      });
+    }
+
+    // Generar menú de slides
+    function generateSlideMenu() {
+      slideMenu.innerHTML = '';
+      slideTitles.forEach((slide, index) => {
+        const item = document.createElement('button');
+        item.className = 'slide-menu-item';
+        item.innerHTML = `
+          <span class="menu-num">${slide.num}</span>
+          <span>${slide.title}</span>
+        `;
+        item.onclick = () => {
+          goToSlide(index);
+          closeSlideMenu();
+        };
+        slideMenu.appendChild(item);
+      });
+      updateSlideMenu();
+    }
+
+    // Actualizar menú activo
+    function updateSlideMenu() {
+      const items = slideMenu.querySelectorAll('.slide-menu-item');
+      items.forEach((item, index) => {
+        item.classList.toggle('active', index === currentSlideIndex);
+      });
+    }
+
+    // Toggle menú
+    function toggleSlideMenu() {
+      slideMenu.classList.toggle('active');
+    }
+
+    // Cerrar menú
+    function closeSlideMenu() {
+      slideMenu.classList.remove('active');
+    }
+
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.slide-menu') && !e.target.closest('.menu-btn')) {
+        closeSlideMenu();
+      }
+    });
+
+    // Initialize paginator and menu
+    generatePaginator();
+    generateSlideMenu();
+    updateNavigation();
+
+    /**
+     * Maneja el efecto flip de las tarjetas de IA
+     * @param {HTMLElement} card - Elemento de la tarjeta a voltear
+     * @param {Event} event - Evento del click
+     */
+    function flipCard(card, event) {
+      if (event) {
+        event.stopPropagation(); // Prevenir navegación al hacer clic en tarjeta
+        event.preventDefault();
+      }
+      const isFlipped = card.classList.contains('flipped');
+      
+      if (isFlipped) {
+        card.classList.remove('flipped');
+      } else {
+        card.classList.add('flipped');
+      }
+    }
+
+    /**
+     * Inicializa los event listeners para las tarjetas flip
+     */
+    function initFlipCards() {
+      const flipCards = document.querySelectorAll('.flip-card');
+      flipCards.forEach(card => {
+        card.addEventListener('click', function(e) {
+          flipCard(this, e);
+        });
+      });
+    }
+
+    /**
+     * Navega al slide siguiente
+     */
+    function nextSlide() {
+      if (currentSlideIndex < totalSlides - 1) {
+        currentSlideIndex++;
+        goToSlide(currentSlideIndex);
+      }
+    }
+
+    /**
+     * Navega al slide anterior
+     */
+    function previousSlide() {
+      if (currentSlideIndex > 0) {
+        currentSlideIndex--;
+        goToSlide(currentSlideIndex);
+      }
+    }
+
+    /**
+     * Va a un slide específico
+     * @param {number} index - Índice del slide (0-based)
+     */
+    function goToSlide(index) {
+      currentSlideIndex = index;
+      const translateX = -index * 100;
+      slidesWrapper.style.transform = `translateX(${translateX}vw)`;
+      updateNavigation();
+    }
+
+    /**
+     * Actualiza los controles de navegación
+     */
+    function updateNavigation() {
+      prevBtn.disabled = currentSlideIndex === 0;
+      nextBtn.disabled = currentSlideIndex === totalSlides - 1;
+      updatePaginator();
+      updateSlideMenu();
+    }
+
+    /**
+     * Maneja la navegación con teclado
+     */
+    document.addEventListener('keydown', function(e) {
+      // Cerrar modales y menú con Escape
+      if (e.key === 'Escape') {
+        closeImageModal();
+        closeProductModal();
+        closeSlideMenu();
+        return;
+      }
+      
+      // Si el modal está abierto, no navegar slides
+      const modal = document.getElementById('imageModal');
+      if (modal && modal.classList.contains('active')) {
+        return;
+      }
+      
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        previousSlide();
+      } else if (e.key === 'Home') {
+        e.preventDefault();
+        goToSlide(0);
+      } else if (e.key === 'End') {
+        e.preventDefault();
+        goToSlide(totalSlides - 1);
+      }
+    });
+
+    /**
+     * IMAGE MODAL / LIGHTBOX FUNCTIONALITY
+     */
+    function openImageModal(imgSrc) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImage');
+      if (modal && modalImg) {
+        modalImg.src = imgSrc;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeImageModal() {
+      const modal = document.getElementById('imageModal');
+      if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function initImageModal() {
+      // Agregar click listener a todas las imágenes en slides
+      const images = document.querySelectorAll('.slide img:not(.no-modal)');
+      images.forEach(img => {
+        img.addEventListener('click', function(e) {
+          e.stopPropagation();
+          openImageModal(this.src);
+        });
+      });
+
+      // Cerrar modal al hacer clic en el overlay
+      const modal = document.getElementById('imageModal');
+      if (modal) {
+        modal.addEventListener('click', function(e) {
+          if (e.target === this || e.target.classList.contains('image-modal-close')) {
+            closeImageModal();
+          }
+        });
+      }
+    }
+
+    /**
+     * PRODUCT MODAL - Ficha estilo Netflix
+     */
+    // Variables para la galería
+    let currentGalleryIndex = 0;
+    let currentGalleryImages = [];
+
+    const productData = {
+      'lead-router': {
+        images: ['./assets/images/products/lead_router.png'],
+        badge: 'LEAD ROUTER',
+        badgeColor: '#38bdf8',
+        title: 'Asistente de Clasificación Inteligente',
+        tagline: '"Tu secretario digital que nunca duerme, nunca olvida, y siempre prioriza bien"',
+        description: `Imagina tener un asistente que trabaja 24/7, los 365 días del año. Cada vez que alguien envía un mensaje preguntando por tus servicios —ya sea por WhatsApp, formulario web o email— este asistente:<br><br>
+        <b>1. Entiende la intención:</b> ¿Quiere remodelar? ¿Vender su casa? ¿Es un inversor buscando flip?<br>
+        <b>2. Detecta la urgencia:</b> ¿Necesita respuesta hoy o está explorando para el próximo año?<br>
+        <b>3. Identifica la zona:</b> Nassau, Suffolk, Queens... sabe dónde está el proyecto.<br>
+        <b>4. Responde personalizado:</b> El cliente recibe un mensaje relevante en segundos.<br>
+        <b>5. Te prepara el dossier:</b> Cuando abres tu panel, tienes todo: nombre, contacto, tipo de proyecto, urgencia, y sugerencia de próximo paso.<br><br>
+        Tú solo decides a quién llamar primero. El resto ya está hecho.`,
+        features: [
+          { icon: '⚡', title: 'Respuesta Instantánea', desc: 'Menos de 30 segundos' },
+          { icon: '🎯', title: 'Clasificación Precisa', desc: '95% de accuracy' },
+          { icon: '📊', title: 'Lead Scoring', desc: 'Prioriza por valor' },
+          { icon: '🔄', title: 'Aprende Contigo', desc: 'Mejora con feedback' },
+          { icon: '📱', title: 'Multi-Canal', desc: 'WhatsApp, Web, Email' },
+          { icon: '🌙', title: '24/7 Activo', desc: 'Nunca descansa' }
+        ],
+        stats: [
+          { value: '< 30s', label: 'Tiempo de respuesta' },
+          { value: '+200%', label: 'Más leads capturados' },
+          { value: '24/7', label: 'Disponibilidad' }
+        ]
+      },
+      'virtual-staging': {
+        images: ['./assets/images/products/virtual_staging_main.png', './assets/images/products/virtual_staging_1.png', './assets/images/products/virtual_staging_2.png'],
+        badge: 'STAGING IA',
+        badgeColor: '#a855f7',
+        title: 'Diseñador Virtual de Interiores',
+        tagline: '"Muestra el potencial de cualquier propiedad sin mover un solo mueble"',
+        description: `El staging tradicional cuesta miles de dólares y días de trabajo. Con Virtual Staging IA, transformas cualquier espacio vacío en una visión aspiracional en minutos:<br><br>
+        <b>1. Sube las fotos:</b> Toma fotos del espacio vacío con tu celular.<br>
+        <b>2. Elige el estilo:</b> Moderno, clásico, farmhouse, minimalista, industrial...<br>
+        <b>3. La IA hace magia:</b> En minutos tienes renders fotorrealistas de cómo quedaría amueblado.<br>
+        <b>4. Impresiona clientes:</b> Muestra el "antes y después" en tu portafolio y propuestas.<br><br>
+        Perfecto para:<br>
+        • <b>Fix & Flip:</b> Muestra el potencial antes de comprar<br>
+        • <b>Ventas:</b> Ayuda compradores a visualizar su futuro hogar<br>
+        • <b>Remodelaciones:</b> Presenta opciones de diseño sin contratar arquitecto`,
+        features: [
+          { icon: '🖼️', title: 'Foto → Render', desc: 'Transformación mágica' },
+          { icon: '🎨', title: '10+ Estilos', desc: 'Moderno a clásico' },
+          { icon: '⏱️', title: 'En Minutos', desc: 'No días ni semanas' },
+          { icon: '💰', title: '90% Ahorro', desc: 'vs staging tradicional' },
+          { icon: '🔄', title: 'Iteraciones', desc: 'Ajusta hasta que ames' },
+          { icon: '📤', title: 'Alta Resolución', desc: 'Listo para imprimir' }
+        ],
+        stats: [
+          { value: '< 5min', label: 'Por render' },
+          { value: '90%', label: 'Ahorro vs tradicional' },
+          { value: '10+', label: 'Estilos disponibles' }
+        ]
+      },
+      'content-generator': {
+        images: ['./assets/images/products/content_generator.png'],
+        badge: 'CONTENT IA',
+        badgeColor: '#ec4899',
+        title: 'Redactor de Contenido de Autoridad',
+        tagline: '"Posiciónate como el experto que eres, sin escribir una sola palabra"',
+        description: `Google ama el contenido fresco y relevante. Pero ¿quién tiene tiempo de escribir blog posts cuando hay proyectos que supervisar? Content IA resuelve esto:<br><br>
+        <b>1. Temas inteligentes:</b> La IA sugiere temas que tu audiencia busca: "Permisos DOB en Nassau", "Cómo evaluar una casa para flip", "Tendencias de remodelación 2025".<br>
+        <b>2. Borradores estructurados:</b> Recibes artículos completos con introducción, desarrollo, conclusión, y llamados a la acción.<br>
+        <b>3. SEO integrado:</b> Cada artículo viene optimizado para las palabras clave que importan.<br>
+        <b>4. Tu voz, tu estilo:</b> La IA aprende cómo escribes y mantiene tu tono personal.<br><br>
+        El resultado: Un blog activo que atrae tráfico orgánico, posiciona tu marca como autoridad, y genera leads mientras duermes. Tú solo revisas, ajustas si quieres, y publicas.`,
+        features: [
+          { icon: '🔍', title: 'SEO Nativo', desc: 'Optimizado de fábrica' },
+          { icon: '📝', title: 'Borradores Listos', desc: 'Solo revisar y publicar' },
+          { icon: '🎯', title: 'Keywords Locales', desc: '"contractor near me"' },
+          { icon: '📅', title: 'Calendario', desc: 'Publicación programada' },
+          { icon: '🗣️', title: 'Tu Voz', desc: 'Mantiene tu estilo' },
+          { icon: '📈', title: 'Analytics', desc: 'Mide qué funciona' }
+        ],
+        stats: [
+          { value: '4x', label: 'Más contenido/mes' },
+          { value: '+150%', label: 'Tráfico orgánico' },
+          { value: '10hrs', label: 'Ahorro semanal' }
+        ]
+      }
+    };
+
+    function openProductModal(productId) {
+      const product = productData[productId];
+      if (!product) return;
+
+      const modal = document.getElementById('productModal');
+      
+      // Inicializar galería
+      currentGalleryImages = product.images;
+      currentGalleryIndex = 0;
+      updateGalleryImage();
+      updateGalleryDots();
+      updateGalleryCounter();
+      updateGalleryNavButtons();
+
+      // Poblar datos
+      document.getElementById('productModalBadge').textContent = product.badge;
+      document.getElementById('productModalBadge').style.background = product.badgeColor;
+      document.getElementById('productModalTitle').textContent = product.title;
+      document.getElementById('productModalTitle').style.color = product.badgeColor;
+      document.getElementById('productModalTagline').textContent = product.tagline;
+      document.getElementById('productModalDescription').innerHTML = product.description;
+
+      // Features
+      const featuresContainer = document.getElementById('productModalFeatures');
+      featuresContainer.innerHTML = product.features.map(f => `
+        <div class="product-modal-feature">
+          <div class="product-modal-feature-icon">${f.icon}</div>
+          <div class="product-modal-feature-title">${f.title}</div>
+          <div class="product-modal-feature-desc">${f.desc}</div>
+        </div>
+      `).join('');
+
+      // Stats
+      product.stats.forEach((stat, i) => {
+        document.getElementById(`productModalStat${i+1}Value`).textContent = stat.value;
+        document.getElementById(`productModalStat${i+1}Value`).style.color = product.badgeColor;
+        document.getElementById(`productModalStat${i+1}Label`).textContent = stat.label;
+      });
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductModal() {
+      const modal = document.getElementById('productModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Funciones de la galería
+    function updateGalleryImage() {
+      const img = document.getElementById('productModalImage');
+      img.style.opacity = '0';
+      setTimeout(() => {
+        img.src = currentGalleryImages[currentGalleryIndex];
+        img.style.opacity = '1';
+      }, 200);
+    }
+
+    function updateGalleryDots() {
+      const dotsContainer = document.getElementById('galleryDots');
+      if (currentGalleryImages.length <= 1) {
+        dotsContainer.style.display = 'none';
+        return;
+      }
+      dotsContainer.style.display = 'flex';
+      dotsContainer.innerHTML = currentGalleryImages.map((_, i) => `
+        <button class="gallery-dot ${i === currentGalleryIndex ? 'active' : ''}" 
+                onclick="goToGalleryImage(${i})"></button>
+      `).join('');
+    }
+
+    function updateGalleryCounter() {
+      const counter = document.getElementById('galleryCounter');
+      if (currentGalleryImages.length <= 1) {
+        counter.style.display = 'none';
+        return;
+      }
+      counter.style.display = 'block';
+      counter.textContent = `${currentGalleryIndex + 1} / ${currentGalleryImages.length}`;
+    }
+
+    function updateGalleryNavButtons() {
+      const prevBtn = document.querySelector('.gallery-nav.prev');
+      const nextBtn = document.querySelector('.gallery-nav.next');
+      
+      if (currentGalleryImages.length <= 1) {
+        prevBtn.style.display = 'none';
+        nextBtn.style.display = 'none';
+        return;
+      }
+      
+      prevBtn.style.display = 'flex';
+      nextBtn.style.display = 'flex';
+      prevBtn.disabled = currentGalleryIndex === 0;
+      nextBtn.disabled = currentGalleryIndex === currentGalleryImages.length - 1;
+    }
+
+    function prevGalleryImage() {
+      if (currentGalleryIndex > 0) {
+        currentGalleryIndex--;
+        updateGalleryImage();
+        updateGalleryDots();
+        updateGalleryCounter();
+        updateGalleryNavButtons();
+      }
+    }
+
+    function nextGalleryImage() {
+      if (currentGalleryIndex < currentGalleryImages.length - 1) {
+        currentGalleryIndex++;
+        updateGalleryImage();
+        updateGalleryDots();
+        updateGalleryCounter();
+        updateGalleryNavButtons();
+      }
+    }
+
+    function goToGalleryImage(index) {
+      currentGalleryIndex = index;
+      updateGalleryImage();
+      updateGalleryDots();
+      updateGalleryCounter();
+      updateGalleryNavButtons();
+    }
+
+    // Inicialización cuando el DOM está listo
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Presentación Salambay Developers cargada correctamente');
+      // Inicializar las tarjetas flip
+      initFlipCards();
+      // Inicializar el modal de imágenes
+      initImageModal();
+      // Asegurar que el primer slide esté visible
+      goToSlide(0);
+    });
+  </script>
+
+  <!-- Modal para imágenes a pantalla completa -->
+  <div id="imageModal" class="image-modal">
+    <span class="image-modal-close">&times;</span>
+    <img id="modalImage" src="" alt="Imagen ampliada">
+    <div class="image-modal-hint">Presiona ESC o haz clic fuera para cerrar</div>
+  </div>
+
+  <!-- Modal Ficha de Producto (estilo Apple/IMDb) -->
+  <div id="productModal" class="product-modal" onclick="if(event.target === this) closeProductModal()">
+    <div class="product-modal-content">
+      <!-- Lado izquierdo: Galería de imágenes -->
+      <div class="product-modal-left">
+        <div class="product-modal-gallery">
+          <button class="gallery-nav prev" onclick="prevGalleryImage()">‹</button>
+          <img id="productModalImage" src="" alt="">
+          <button class="gallery-nav next" onclick="nextGalleryImage()">›</button>
+          <div class="gallery-dots" id="galleryDots"></div>
+          <div class="gallery-counter" id="galleryCounter">1 / 1</div>
+        </div>
+        <span id="productModalBadge" class="product-modal-badge"></span>
+      </div>
+      
+      <!-- Lado derecho: Contenido -->
+      <div class="product-modal-right">
+        <button class="product-modal-close" onclick="closeProductModal()">✕</button>
+        
+        <h2 id="productModalTitle" class="product-modal-title"></h2>
+        <p id="productModalTagline" class="product-modal-tagline"></p>
+        <div id="productModalDescription" class="product-modal-description"></div>
+        
+        <div id="productModalFeatures" class="product-modal-features"></div>
+        
+        <div class="product-modal-stats">
+          <div class="product-modal-stat">
+            <div id="productModalStat1Value" class="product-modal-stat-value"></div>
+            <div id="productModalStat1Label" class="product-modal-stat-label"></div>
+          </div>
+          <div class="product-modal-stat">
+            <div id="productModalStat2Value" class="product-modal-stat-value"></div>
+            <div id="productModalStat2Label" class="product-modal-stat-label"></div>
+          </div>
+          <div class="product-modal-stat">
+            <div id="productModalStat3Value" class="product-modal-stat-value"></div>
+            <div id="productModalStat3Label" class="product-modal-stat-label"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
