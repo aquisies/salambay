@@ -1,158 +1,105 @@
-# 🏠 Salambay - Presentación Digital
+# 🏗️ Salambay Developers - Propuesta de Ecosistema Digital
 
-Presentación interactiva para **Salambay Developers**, propuesta de ecosistema digital inmobiliario potenciado con inteligencia artificial.
+Presentación interactiva y propuesta comercial para la transformación digital de **Salambay Developers**, diseñada para mostrar el potencial de una plataforma inmobiliaria potenciada por Inteligencia Artificial y automatización.
+
+![Salambay Digital Canvas](./assets/images/digital_ecosystem_canvas.png)
+
+## 🎯 Objetivos de la Propuesta
+Este proyecto no es solo una landing page, es un **Ecosistema Digital Completo** que abarca:
+1.  **Captación Inteligente:** Uso de IA Lead Router para clasificar prospectos.
+2.  **Visualización Persuasiva:** Virtual Staging automatizado para propiedades.
+3.  **Autoridad en Contenido:** Blog SEO generado por IA.
+4.  **Gestión Operativa:** Negocio digitalizado y métricas claras.
 
 ---
 
 ## 📁 Estructura del Proyecto
 
+Organización moderna y limpia para facilitar su mantenimiento y despliegue:
+
 ```
 salambay/
-├── presentation.html          # Archivo principal de la presentación
-├── README.md                  # Este archivo
-├── salambay.jpg               # Logo de Salambay
-│
-├── 📸 Imágenes de Slides
-│   ├── Gemini_Generated_Image_01.png   # Slide 1: Portada
-│   ├── Gemini_Generated_Image_02.png   # Slide 2: El Problema
-│   ├── Gemini_Generated_Image_03.png   # Slide 3: Ecosistema Digital
-│   ├── Gemini_Generated_Image_04.png   # Slide 4: Antes vs Después
-│   ├── Gemini_Generated_Image_05.png   # Slide 5: Solución Propuesta
-│   ├── Gemini_Generated_Image_06.png   # Slide 6: IA Inteligente
-│   ├── Gemini_Generated_Image_17bkhk17bkhk17bk.png  # Adicional
-│   └── Gemini_Generated_Image_pg2szopg2szopg2s.png  # Adicional
-│
-└── 📸 Imágenes de Productos IA
-    ├── ia_virtual_staging.png    # Virtual Staging - Cocina (efecto púrpura)
-    ├── ia_virtual_staging1.png   # Virtual Staging - Cocina (transformación)
-    ├── ia_virtual_staging2.png   # Virtual Staging - Baño (antes/después)
-    ├── ia_content_generator.png  # Content Generator
-    └── ia_lead_router.png        # Lead Router
+├── assets/
+│   └── images/
+│       ├── backgrounds/       # Fondos y texturas visuales
+│       ├── products/          # Iconos y demos de los productos IA (LeadRouter, Staging)
+│       ├── digital_ecosystem_canvas.png  # Mapa estratégico del negocio
+│       └── ...                # Diagramas de arquitectura y flujos
+├── presentation.html          # Single Page Application (SPA) de la presentación
+├── Dockerfile                 # Configuración para despliegue en contenedor
+└── README.md                  # Documentación del proyecto
 ```
 
 ---
 
-## 🚀 Despliegue
+## 🚀 Despliegue en Producción (Docker)
 
-### Opción 1: Abrir directamente (Local)
+El proyecto está "Dockerizado" para un despliegue instantáneo y ligero en cualquier servidor (Hostinger VPS, Dokploy, Portainer).
 
-Simplemente abre el archivo `presentation.html` en tu navegador:
+### Requisitos
+*   Docker instalado
+*   Un dominio configurado (opcional)
 
-```bash
-# macOS
-open presentation.html
+### Pasos Rápidos
+1.  **Construir la imagen:**
+    ```bash
+    docker build -t salambay-demo .
+    ```
+2.  **Correr el contenedor:**
+    ```bash
+    docker run -d -p 80:80 --name salambay-demo salambay-demo
+    ```
+3.  **Acceder:** Abre tu navegador en `http://localhost` (o la IP de tu servidor).
 
-# Windows
-start presentation.html
-
-# Linux
-xdg-open presentation.html
-```
-
-### Opción 2: Servidor local (Recomendado)
-
-Para evitar restricciones de CORS con imágenes locales:
-
-```bash
-# Usando Python 3
-cd /ruta/a/salambay
-python3 -m http.server 8000
-
-# Luego abre en el navegador:
-# http://localhost:8000/presentation.html
-```
-
-```bash
-# Usando Node.js (npx)
-npx serve .
-
-# O con http-server
-npx http-server -p 8000
-```
-
-### Opción 3: Despliegue en la nube
-
-#### GitHub Pages
-1. Sube el proyecto a un repositorio GitHub
-2. Ve a Settings → Pages
-3. Selecciona la rama `main` y carpeta `/ (root)`
-4. Accede en: `https://tuusuario.github.io/salambay/presentation.html`
-
-#### Netlify / Vercel
-1. Arrastra la carpeta `salambay/` al dashboard
-2. Se despliega automáticamente con un dominio único
-
-#### Hostinger / VPS
-```bash
-# Sube los archivos via FTP/SFTP o SSH
-scp -r salambay/* usuario@servidor:/var/www/html/salambay/
-```
+### Despliegue con Dokploy
+1.  Crear **Application**.
+2.  Conectar repositorio GitHub: `aquisies/salambay`.
+3.  Rama: `main`.
+4.  Build Type: `Dockerfile`.
+5.  ¡Deploy!
 
 ---
 
-## 🎮 Navegación
+## 🎮 Navegación de la Presentación
 
 | Acción | Resultado |
 |--------|-----------|
-| `→` `Space` `Click derecho` | Siguiente slide |
-| `←` `Click izquierdo` | Slide anterior |
-| `Home` | Ir al inicio |
-| `End` | Ir al final |
-| `Esc` | Cerrar modal de imagen |
-| **Paginator** | Click en número para ir a slide específico |
-| **Menú ☰** | Dropdown con todos los slides |
+| `→` `Espacio` | Siguiente diapositiva |
+| `←` | Diapositiva anterior |
+| `Esc` | Cerrar modales (Imágenes o Fichas de Producto) |
+| **Menú ☰** | Saltara cualquier sección específica |
 
 ---
 
-## ✨ Características
+## 📋 Contenido (Slides)
 
-- 📱 **Responsive**: Adaptable a diferentes tamaños de pantalla
-- 🎨 **Tema oscuro**: Diseño elegante con gradientes púrpura/magenta
-- 🖼️ **Modal de imágenes**: Click en cualquier imagen para verla a pantalla completa
-- 📸 **Galería de productos**: Navegación entre múltiples imágenes en fichas de producto
-- 💡 **Tooltips informativos**: Hover sobre items para ver descripciones
-- 🧭 **Navegación múltiple**: Teclado, botones, paginator y menú dropdown
-
----
-
-## 📋 Contenido de la Presentación
-
-| Slide | Título | Descripción |
-|-------|--------|-------------|
-| 1 | Portada | Introducción Salambay Developers |
-| 2 | El Problema | Pain points actuales |
-| 3 | Ecosistema Digital | Visión del sistema conectado |
-| 4 | Antes vs Después | Transformación propuesta |
-| 5 | Solución Propuesta | Arquitectura técnica |
-| 6 | IA Inteligente | Módulos de IA (Virtual Staging, Content Generator, Lead Router) |
-| 7 | ROI y Beneficios | Retorno de inversión esperado |
-| 8 | Quick Wins | Mejoras rápidas al sitio actual |
-| 9 | Ecosistema Completo | Paquetes modulares detallados |
-| 10 | Inversión | Desglose de costos y oferta especial |
-| 11 | Cronograma | Timeline de implementación |
-| 12 | Cierre | Contacto y llamado a la acción |
+| # | Título | Foco |
+|---|--------|------|
+| 1 | **Portada** | Introducción e impacto visual. |
+| 2 | **El Problema** | Dolores actuales (leads perdidos, procesos manuales). |
+| 3 | **Ecosistema** | Visión macro de la solución. |
+| 3b| **Estrategia** | **Digital Ecosystem Canvas** (Modelo de negocio). |
+| 4 | **Antes vs Después** | Comparativa visual de resultados. |
+| 5 | **Customer Journey** | Flujo desde la visita hasta la venta. |
+| 6 | **Cerebro IA** | Demo de productos: Lead Router, Staging, Content IA. |
+| 7 | **Beneficios/ROI** | Retorno de inversión y métricas esperadas. |
+| 8 | **Quick Wins** | Mejoras inmediatas al sitio actual. |
+| 8b| **Módulos** | Detalle técnico y precios por módulo. |
+| 8c| **Hoja de Ruta** | Plan de implementación paso a paso. |
+| 9 | **Por Qué Nosotros** | Diferenciadores clave (Bootstrap, IA Real). |
+| 10| **Próximos Pasos** | Call to Action (CTA. |
+| 11| **Contacto** | Información final. |
 
 ---
 
-## 🛠️ Tecnologías
-
-- **HTML5** - Estructura semántica
-- **CSS3** - Variables, Flexbox, Grid, Transiciones, Animaciones
-- **JavaScript** - Vanilla JS (sin frameworks)
-- **Imágenes** - Generadas con Gemini AI
+## 🛠️ Stack Tecnológico
+*   **HTML5 & CSS3 Moderno:** Sin frameworks pesados, puro rendimiento.
+*   **Vanilla JS:** Lógica ligera para navegación y modales.
+*   **Nginx Alpine:** Servidor web ultra-compacto (<10MB) para producción.
 
 ---
 
-## 📞 Contacto
-
+## 📞 Contacto y Autoría
 **Alexander Mina**  
-📧 aquisiesalex@gmail.com  
-📱 WhatsApp: +57 316 868 9852
-
----
-
-## 📄 Licencia
-
-Este proyecto es una propuesta comercial para Salambay.  
-Todos los derechos reservados © 2024
-
+*Ingeniero de Sistemas Senior | Arquitecto de Soluciones*  
+📧 aquisiesalex@gmail.com
