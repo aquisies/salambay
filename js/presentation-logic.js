@@ -255,34 +255,6 @@
       }
     });
     
-    // Función para mostrar/ocultar código fuente
-    window.toggleCodeViewer = function() {
-      const codeViewer = document.getElementById('codeViewer');
-      const codeViewerBtn = document.getElementById('codeViewerBtn');
-      
-      if (!codeViewer) return;
-      
-      const isActive = codeViewer.classList.contains('active');
-      
-      if (!isActive) {
-        // Mostrar código
-        codeViewer.classList.add('active');
-        loadCodeSource('html'); // Cargar HTML por defecto
-      } else {
-        // Ocultar código
-        codeViewer.classList.remove('active');
-      }
-      
-      // Actualizar el botón en el menú contextual
-      if (codeViewerBtn) {
-        const isNowActive = codeViewer.classList.contains('active');
-        codeViewerBtn.innerHTML = `
-          <span class="context-menu-icon" style="font-size: 1.2rem;">${isNowActive ? '👁\u200d🗨' : '👁'}</span>
-          <span>${isNowActive ? 'Ocultar Código' : 'Ver Código'}</span>
-        `;
-      }
-    };
-    
     // Función para cargar el código fuente según la pestaña seleccionada
     function loadCodeSource(type) {
       const codeText = document.getElementById('codeText');

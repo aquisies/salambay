@@ -1,7 +1,13 @@
 FROM nginx:alpine
 
-# Copiar la presentación como archivo índice
-COPY presentation.html /usr/share/nginx/html/index.html
+# Copiar el archivo principal (index.html es el archivo actualizado)
+COPY index.html /usr/share/nginx/html/index.html
+
+# Copiar los archivos CSS
+COPY css /usr/share/nginx/html/css
+
+# Copiar los archivos JavaScript
+COPY js /usr/share/nginx/html/js
 
 # Copiar los assets (imágenes, estilos si hubiera externos)
 COPY assets /usr/share/nginx/html/assets
