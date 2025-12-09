@@ -1,0 +1,80 @@
+    document.body.style.justifyContent = 'center';
+    document.body.style.alignItems = 'center';
+    document.body.style.height = '100vh';
+    document.body.style.overflow = 'hidden';
+
+    // Inicialización cuando el DOM está listo
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('Presentación Salambay Developers cargada correctamente');
+      
+      // Verificar acceso
+      checkAccess();
+
+      // Inicializar las tarjetas flip
+      initFlipCards();
+      // Inicializar el modal de imágenes
+      initImageModal();
+      
+      // Auto-escala inicial
+      autoScalePresentation();
+      
+      // Asegurar que el primer slide esté visible
+      goToSlide(0);
+    });
+    
+    // Re-escalar al cambiar tamaño de ventana o rotar
+    window.addEventListener('resize', autoScalePresentation);
+  </script>
+
+  <!-- Modal para imágenes a pantalla completa -->
+  <div id="imageModal" class="image-modal">
+    <span class="image-modal-close">&times;</span>
+    <img id="modalImage" src="" alt="Imagen ampliada">
+    <div class="image-modal-hint">Presiona ESC o haz clic fuera para cerrar</div>
+  </div>
+
+  <!-- Modal Ficha de Producto (estilo Apple/IMDb) -->
+  <div id="productModal" class="product-modal" onclick="if(event.target === this) closeProductModal()">
+    <div class="product-modal-content">
+      <!-- Lado izquierdo: Galería de imágenes -->
+      <div class="product-modal-left">
+        <div class="product-modal-gallery">
+          <button class="gallery-nav prev" onclick="prevGalleryImage()">‹</button>
+          <img id="productModalImage" src="" alt="">
+          <button class="gallery-nav next" onclick="nextGalleryImage()">›</button>
+          <div class="gallery-dots" id="galleryDots"></div>
+          <div class="gallery-counter" id="galleryCounter">1 / 1</div>
+        </div>
+        <span id="productModalBadge" class="product-modal-badge"></span>
+      </div>
+      
+      <!-- Lado derecho: Contenido -->
+      <div class="product-modal-right">
+        <button class="product-modal-close" onclick="closeProductModal()">✕</button>
+        
+        <h2 id="productModalTitle" class="product-modal-title"></h2>
+        <p id="productModalTagline" class="product-modal-tagline"></p>
+        <div id="productModalDescription" class="product-modal-description"></div>
+        
+        <div id="productModalFeatures" class="product-modal-features"></div>
+        
+        <div class="product-modal-stats">
+          <div class="product-modal-stat">
+            <div id="productModalStat1Value" class="product-modal-stat-value"></div>
+            <div id="productModalStat1Label" class="product-modal-stat-label"></div>
+          </div>
+          <div class="product-modal-stat">
+            <div id="productModalStat2Value" class="product-modal-stat-value"></div>
+            <div id="productModalStat2Label" class="product-modal-stat-label"></div>
+          </div>
+          <div class="product-modal-stat">
+            <div id="productModalStat3Value" class="product-modal-stat-value"></div>
+            <div id="productModalStat3Label" class="product-modal-stat-label"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

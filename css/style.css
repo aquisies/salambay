@@ -1,0 +1,1199 @@
+/* ============================================
+   1. VARIABLES & RESET
+   ============================================ */
+:root {
+  /* Typography */
+  --font-family-display: Arial, sans-serif;
+  --font-family-content: Arial, sans-serif;
+
+  /* Colors - Dark Theme */
+  --color-bg-base: #0f172a;
+  --color-bg-elevated: #020617;
+  --color-bg-surface: #1e293b;
+  --color-bg-muted: #334155;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-primary: #38bdf8;
+  --color-primary-foreground: #0f172a;
+  --color-warning: #fbbf24;
+
+  /* Transitions */
+  --transition-fast: 0.3s;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-family-content);
+  background: #000;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  /* Controlado por JS */
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ============================================
+   2. PRESENTATION CONTAINER (Auto-Scaled)
+   ============================================ */
+.presentation-container {
+  width: 960px !important;
+  height: 540px !important;
+  position: relative !important;
+  background: var(--color-bg-base);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden !important; /* CRÍTICO: Ocultar slides fuera de vista */
+  /* CRITICAL: Hide non-active slides - oculta cualquier contenido fuera del contenedor */
+  /* El overflow-x: hidden asegura que solo se vea el slide activo */
+}
+
+/* Slides Wrapper */
+#slidesWrapper {
+  display: flex !important;
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  height: 100% !important;
+  width: max-content !important;
+  /* Allow slides to expand horizontally */
+  position: relative;
+  /* Asegurar que el wrapper respete el overflow del contenedor padre */
+  overflow: visible;
+}
+
+.slide {
+  width: 960px !important;
+  height: 540px !important;
+  flex-shrink: 0 !important;
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  /* Asegurar que cada slide ocupe exactamente su espacio */
+  box-sizing: border-box;
+}
+
+/* En responsive, usar sistema de acordeón para tarjetas */
+@media screen and (max-width: 1024px) {
+  /* Mantener body centrado y sin scroll - diseño profesional */
+  body {
+    overflow: hidden !important;
+    align-items: center !important;
+  }
+  
+  /* Slides mantienen altura fija - sin scrollbars */
+  .slide {
+    height: 540px !important;
+    overflow: hidden !important;
+  }
+  
+  /* Mantener contenedor centrado y ordenado */
+  .presentation-container {
+    overflow: hidden !important;
+    width: 960px !important;
+    height: 540px !important;
+  }
+  
+  /* El wrapper mantiene su estructura */
+  #slidesWrapper {
+    height: 100% !important;
+  }
+}
+
+/* ============================================
+   3. UTILITIES & COMPONENTS
+   ============================================ */
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.bg-dark {
+  background: var(--color-bg-base);
+}
+
+.text-accent {
+  color: var(--color-primary);
+}
+
+/* Tooltips */
+.feature-item {
+  position: relative;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.feature-item:hover {
+  background: rgba(56, 189, 248, 0.1);
+  border-radius: 4px;
+}
+
+/* ============================================
+   4. ACCESS GATE (LOGIN)
+   ============================================ */
+#accessGate {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #020617;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.5s ease;
+}
+
+#accessGate.hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.login-container {
+  background: rgba(30, 41, 59, 0.8);
+  padding: 3rem;
+  border-radius: 20px;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  text-align: center;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.password-input-wrapper {
+  position: relative;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.login-input {
+  display: block;
+  width: 100%;
+  padding: 1rem 3rem 1rem 1rem;
+  font-size: 1.2rem;
+  text-align: center;
+  letter-spacing: 3px;
+  background: #0f172a;
+  border: 2px solid #334155;
+  color: white;
+  border-radius: 8px;
+  text-transform: uppercase;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  transition: color 0.2s ease;
+  z-index: 10;
+}
+
+.password-toggle:hover {
+  color: var(--color-primary);
+}
+
+.password-toggle:focus {
+  outline: none;
+  color: var(--color-primary);
+}
+
+.login-btn {
+  padding: 1rem 2rem;
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1rem;
+}
+
+/* ============================================
+   5. MOBILE GUARD (Rotate Prompt)
+   ============================================ */
+#rotateOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #0f172a;
+  z-index: 9990;
+  display: none;
+  /* Default hidden */
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+/* Mostrar SOLO en Portrait Mobile */
+@media screen and (orientation: portrait) and (max-width: 900px) {
+  #rotateOverlay {
+    display: flex !important;
+  }
+
+  .presentation-container {
+    opacity: 0;
+  }
+}
+
+.rotate-icon {
+  font-size: 4rem;
+  animation: spinPhone 2s infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spinPhone {
+
+  0%,
+  10% {
+    transform: rotate(0deg);
+  }
+
+  40%,
+  60% {
+    transform: rotate(90deg);
+  }
+
+  90%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* ============================================
+   6. RESPONSIVE ADJUSTMENTS
+   ============================================ */
+
+/* Ajustes para tablets y móviles en landscape */
+@media screen and (max-width: 1024px) {
+  .nav-controls {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .page-num {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+  
+  .page-num.sub-page {
+    width: 24px;
+    height: 24px;
+    font-size: 0.65rem;
+  }
+}
+
+/* Ajustes para móviles en landscape */
+@media screen and (max-width: 900px) and (orientation: landscape) {
+  .nav-controls {
+    bottom: 10px;
+    padding: 4px 8px;
+  }
+  
+  /* Paginación elegante responsive */
+  .paginator {
+    gap: 4px;
+  }
+  
+  .nav-page-btn {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+  
+  .current-slide-indicator {
+    padding: 6px 12px;
+    min-width: 60px;
+  }
+  
+  .current-slide-num {
+    font-size: 1rem;
+  }
+  
+  .current-slide-title {
+    font-size: 0.65rem;
+    max-width: 80px;
+  }
+  
+  .keyboard-hint {
+    display: none; /* Ocultar en móvil */
+  }
+  
+  /* Modales responsive */
+  .product-modal-content {
+    flex-direction: column;
+    max-height: 95vh;
+    width: 98%;
+  }
+  
+  .product-modal-left {
+    width: 100%;
+    height: 40%;
+  }
+  
+  .product-modal-right {
+    width: 100%;
+    height: 60%;
+    padding: 1rem;
+  }
+  
+  .product-modal-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Ajustes para modales en móvil */
+@media screen and (max-width: 768px) {
+  .image-modal img {
+    max-width: 98vw;
+    max-height: 90vh;
+  }
+  
+  .product-modal-content {
+    flex-direction: column;
+    height: 95vh;
+    max-height: none;
+  }
+  
+  .product-modal-left {
+    width: 100%;
+    height: 35%;
+  }
+  
+  .product-modal-right {
+    width: 100%;
+    height: 65%;
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  
+  .product-modal-features {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .product-modal-feature {
+    padding: 0.6rem;
+  }
+  
+  .product-modal-feature-icon {
+    font-size: 1.2rem;
+  }
+  
+  .product-modal-feature-title {
+    font-size: 0.7rem;
+  }
+  
+  .product-modal-feature-desc {
+    font-size: 0.6rem;
+  }
+  
+  .slide-menu {
+    min-width: 280px;
+    max-height: 60vh;
+    bottom: 50px;
+  }
+  
+  /* Responsive para grid de beneficios - Sistema de Acordeón */
+  .benefits-grid {
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+    overflow: hidden !important;
+    height: 100% !important;
+  }
+  
+  /* Tarjetas de beneficios con acordeón */
+  .benefit-card {
+    flex: none !important;
+    width: 100% !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    overflow: hidden;
+    max-height: 120px; /* Colapsada - solo header e icono */
+    position: relative;
+  }
+  
+  .benefit-card.expanded {
+    max-height: 250px !important;
+    flex: 1 !important;
+  }
+  
+  .benefit-card > div:first-child {
+    pointer-events: none;
+  }
+  
+  .benefit-card ul {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.4s ease;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .benefit-card.expanded ul {
+    opacity: 1;
+    max-height: 200px;
+    margin: 0.5rem 0 0 0 !important;
+    padding-left: 1rem !important;
+  }
+  
+  .benefit-card::after {
+    content: '▼';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: var(--color-primary);
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .benefit-card.expanded::after {
+    transform: rotate(180deg);
+  }
+  
+  .benefit-card ul {
+    font-size: 0.85rem !important;
+  }
+  
+  .benefit-card h3 {
+    font-size: 1rem !important;
+  }
+}
+
+/* Responsive para tablets - 2 columnas */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .benefits-grid {
+    flex-wrap: wrap;
+  }
+  
+  .benefit-card {
+    flex: 1 1 calc(50% - 0.75rem) !important;
+    min-width: calc(50% - 0.75rem);
+  }
+  
+  /* Quick Wins: 2 columnas en tablet */
+  .quick-wins-grid {
+    flex-wrap: wrap !important;
+  }
+  
+  .quick-wins-card {
+    flex: 1 1 calc(50% - 0.5rem) !important;
+    min-width: calc(50% - 0.5rem);
+  }
+}
+
+/* Quick Wins: Sistema de Acordeón en móviles - Innovador y Profesional */
+@media screen and (max-width: 768px) {
+  .quick-wins-grid {
+    flex-direction: column !important;
+    gap: 0.6rem !important;
+    height: 100% !important;
+    overflow: hidden !important;
+  }
+  
+  /* Tarjetas colapsadas por defecto */
+  .quick-wins-card {
+    flex: none !important;
+    width: 100% !important;
+    padding: 0.8rem !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    max-height: 60px; /* Altura colapsada - solo muestra header compacto */
+  }
+  
+  /* Asegurar altura mínima cuando colapsada */
+  .quick-wins-card:not(.expanded) {
+    max-height: 60px !important;
+    min-height: 60px;
+  }
+  
+  /* Tarjeta expandida (primera por defecto) */
+  .quick-wins-card.expanded {
+    max-height: 400px !important; /* Altura expandida */
+    flex: 1 !important;
+  }
+  
+  /* Header siempre visible - reorganizar layout */
+  .quick-wins-card > div:first-child {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    margin-bottom: 0 !important;
+    pointer-events: none;
+    min-height: 60px;
+  }
+  
+  /* Cuando está colapsada, mostrar solo header compacto */
+  .quick-wins-card:not(.expanded) > div:first-child {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    padding: 0.5rem 0;
+  }
+  
+  /* Ocultar precio cuando está colapsada */
+  .quick-wins-card:not(.expanded) > div:first-child > div:last-child {
+    display: none;
+  }
+  
+  /* Mostrar solo icono y título cuando colapsada */
+  .quick-wins-card:not(.expanded) > div:first-child > span:first-child {
+    font-size: 1.5rem !important;
+    margin-right: 0.5rem;
+  }
+  
+  .quick-wins-card:not(.expanded) > div:first-child > h3 {
+    font-size: 0.9rem !important;
+    margin: 0 !important;
+    flex: 1;
+    text-align: left !important;
+  }
+  
+  /* Contenido colapsable */
+  .quick-wins-card ul {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.4s ease;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .quick-wins-card.expanded ul {
+    opacity: 1;
+    max-height: 300px;
+    margin: 0.5rem 0 0 0 !important;
+    padding-left: 0.5rem !important;
+  }
+  
+  /* Footer colapsable */
+  .quick-wins-card > div:last-child {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.4s ease;
+  }
+  
+  .quick-wins-card.expanded > div:last-child {
+    opacity: 1;
+    max-height: 50px;
+  }
+  
+  /* Indicador visual de expansión */
+  .quick-wins-card::after {
+    content: '▼';
+    position: absolute;
+    top: 0.8rem;
+    right: 0.8rem;
+    color: var(--color-primary);
+    font-size: 0.7rem;
+    transition: transform 0.3s ease;
+    pointer-events: none;
+  }
+  
+  .quick-wins-card.expanded::after {
+    transform: rotate(180deg);
+  }
+  
+  /* Ajustes de tipografía */
+  .quick-wins-card h3 {
+    font-size: 0.95rem !important;
+    margin: 0 !important;
+  }
+  
+  .quick-wins-card.expanded ul {
+    font-size: 0.75rem !important;
+    line-height: 1.5 !important;
+  }
+  
+  /* Ajustar precios */
+  .quick-wins-card > div > div:first-child > div:first-child {
+    font-size: 1.4rem !important;
+  }
+  
+  .quick-wins-card > div > div:first-child > div:first-child + div {
+    font-size: 1.3rem !important;
+  }
+  
+  /* Slide mantiene altura fija */
+  .slide[data-slide="8"] {
+    height: 540px !important;
+    overflow: hidden !important;
+  }
+  
+  /* Ajustar padding */
+  .slide[data-slide="8"].p-16 {
+    padding: 1rem !important;
+  }
+}
+
+/* Menú Contextual Elegante */
+.context-menu-wrapper {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
+
+.context-menu-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 300;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  line-height: 1;
+}
+
+.context-menu-btn:hover {
+  background: rgba(15, 23, 42, 1);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(56, 189, 248, 0.4);
+}
+
+.context-menu {
+  position: absolute;
+  top: 54px;
+  left: 0;
+  background: rgba(15, 23, 42, 0.98);
+  border-radius: 12px;
+  padding: 8px 0;
+  min-width: 240px;
+  max-width: 320px;
+  max-height: 80vh;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  /* Asegurar que el scroll funcione */
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Scrollbar personalizado para el menú contextual */
+.context-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.context-menu::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 4px;
+  margin: 8px 0;
+}
+
+.context-menu::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+.context-menu::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #7dd3fc 0%, #38bdf8 100%);
+  background-clip: padding-box;
+}
+
+.context-menu.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.context-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.context-menu-item:hover {
+  background: rgba(56, 189, 248, 0.15);
+  color: var(--color-primary);
+}
+
+.context-menu-item.active {
+  background: rgba(56, 189, 248, 0.2);
+  color: var(--color-primary);
+  border-left: 3px solid var(--color-primary);
+}
+
+.context-menu-icon {
+  font-size: 1.2rem;
+  width: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.context-menu-icon.menu-num {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--color-bg-surface);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.context-menu-item.active .context-menu-icon.menu-num {
+  background: var(--color-primary);
+  color: var(--color-primary-foreground);
+}
+
+.context-menu-separator {
+  height: 1px;
+  background: rgba(56, 189, 248, 0.2);
+  margin: 8px 0;
+}
+
+.context-menu-section-title {
+  padding: 8px 16px 4px 16px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Indicador visual de scroll al final del menú */
+.context-menu::after {
+  content: '';
+  position: sticky;
+  bottom: 0;
+  display: block;
+  height: 20px;
+  background: linear-gradient(to top, rgba(15, 23, 42, 0.98) 0%, transparent 100%);
+  pointer-events: none;
+  margin-top: -20px;
+}
+
+@media screen and (max-width: 768px) {
+  .context-menu-wrapper {
+    top: 15px;
+    left: 15px;
+  }
+  
+  .context-menu-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
+  }
+  
+  .context-menu {
+    min-width: 220px;
+    max-width: 280px;
+    max-height: 70vh;
+    top: 50px;
+    overflow-y: auto !important;
+  }
+  
+  .context-menu-item {
+    padding: 10px 14px;
+    font-size: 0.85rem;
+  }
+  
+  .context-menu-section-title {
+    padding: 6px 14px 2px 14px;
+    font-size: 0.7rem;
+  }
+  
+  .context-menu-icon.menu-num {
+    width: 22px;
+    height: 22px;
+    font-size: 0.7rem;
+  }
+}
+
+/* ============================================
+   MODAL DE CONFIRMACIÓN DE LOGOUT
+   ============================================ */
+.logout-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logout-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.logout-modal-content {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.98) 100%);
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 420px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  text-align: center;
+  transform: scale(0.9) translateY(20px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logout-modal.active .logout-modal-content {
+  transform: scale(1) translateY(0);
+}
+
+.logout-modal-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.logout-modal-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.logout-modal-message {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.logout-modal-submessage {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+}
+
+.logout-modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.logout-modal-btn {
+  padding: 0.875rem 2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-width: 140px;
+}
+
+.logout-modal-btn-cancel {
+  background: rgba(51, 65, 85, 0.8);
+  color: var(--color-text-secondary);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+.logout-modal-btn-cancel:hover {
+  background: rgba(51, 65, 85, 1);
+  color: var(--color-text-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.logout-modal-btn-confirm {
+  background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+  color: white;
+  border: 1px solid rgba(248, 113, 113, 0.5);
+  box-shadow: 0 4px 12px rgba(248, 113, 113, 0.3);
+}
+
+.logout-modal-btn-confirm:hover {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(248, 113, 113, 0.4);
+}
+
+.logout-modal-btn-confirm:active {
+  transform: translateY(0);
+}
+
+@media screen and (max-width: 768px) {
+  .logout-modal-content {
+    padding: 2rem 1.5rem;
+    max-width: 90%;
+  }
+  
+  .logout-modal-icon {
+    font-size: 3rem;
+  }
+  
+  .logout-modal-title {
+    font-size: 1.5rem;
+  }
+  
+  .logout-modal-actions {
+    flex-direction: column;
+  }
+  
+  .logout-modal-btn {
+    width: 100%;
+  }
+}
+
+/* Cerrar modal al hacer clic fuera */
+.logout-modal.active {
+  cursor: pointer;
+}
+
+.logout-modal.active .logout-modal-content {
+  cursor: default;
+}
+
+/* ============================================
+   VISOR DE CÓDIGO FUENTE
+   ============================================ */
+.code-viewer {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 60%;
+  max-width: 800px;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.98);
+  border-left: 1px solid rgba(56, 189, 248, 0.3);
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.code-viewer.active {
+  right: 0;
+}
+
+.code-viewer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.code-viewer-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.code-viewer-close {
+  background: transparent;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 1.8rem;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.code-viewer-close:hover {
+  background: rgba(248, 113, 113, 0.2);
+  color: #f87171;
+}
+
+.code-viewer-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.code-tab {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 2px solid transparent;
+}
+
+.code-tab:hover {
+  color: var(--color-text-secondary);
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.code-tab.active {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.code-viewer-content {
+  flex: 1;
+  overflow: auto;
+  padding: 1rem;
+  background: #0a0e1a;
+}
+
+.code-content {
+  margin: 0;
+  padding: 1rem;
+  background: #0a0e1a;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'Courier New', 'Monaco', 'Consolas', monospace;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: #e2e8f0;
+}
+
+.code-content code {
+  display: block;
+  white-space: pre;
+  word-wrap: normal;
+  overflow-x: auto;
+}
+
+/* Scrollbar para el visor de código */
+.code-viewer-content::-webkit-scrollbar,
+.code-content::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.code-viewer-content::-webkit-scrollbar-track,
+.code-content::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.6);
+  border-radius: 4px;
+}
+
+.code-viewer-content::-webkit-scrollbar-thumb,
+.code-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #38bdf8 0%, #0ea5e9 100%);
+  border-radius: 4px;
+}
+
+.code-viewer-content::-webkit-scrollbar-thumb:hover,
+.code-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #7dd3fc 0%, #38bdf8 100%);
+}
+
+@media screen and (max-width: 1024px) {
+  .code-viewer {
+    width: 80%;
+    max-width: 600px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .code-viewer {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .code-viewer-header {
+    padding: 0.75rem 1rem;
+  }
+  
+  .code-viewer-header h3 {
+    font-size: 1rem;
+  }
+  
+  .code-tab {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.8rem;
+  }
+  
+  .code-content {
+    font-size: 0.75rem;
+    padding: 0.75rem;
+  }
+}
